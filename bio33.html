@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botonera Tipo App</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      padding-bottom: 70px; /* espacio para la botonera */
+      background-color: #000; /* fondo negro */
+      color: #fff;
+    }
+
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: #000;
+      border-top: 2px solid #FFD700;
+      padding: 12px 0;
+      box-shadow: 0 -2px 5px rgba(255, 215, 0, 0.2);
+    }
+
+    .footer-nav button {
+      background-color: #FFD700; /* amarillo */
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .footer-nav button:hover {
+      background-color: #000;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+    }
+  </style>
+</head>
+<body>
+
+  <style>
+  .perfil-container {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 15px;
+    border: 4px solid #FFD700;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 15px #FFD700;
+    animation: flotar 3s ease-in-out infinite, pulso 2s infinite;
+    transition: all 0.3s ease;
+  }
+
+  .perfil-container:hover {
+    box-shadow: 0 0 25px #FFD700, 0 0 10px #fff;
+    transform: scale(1.05);
+  }
+
+  @keyframes flotar {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+  }
+
+  @keyframes pulso {
+    0% { box-shadow: 0 0 15px #FFD700; }
+    50% { box-shadow: 0 0 25px #FFD700; }
+    100% { box-shadow: 0 0 15px #FFD700; }
+  }
+
+  .bio-boton {
+    display: block;
+    width: 90%;
+    max-width: 300px;
+    margin: 10px auto;
+    padding: 14px 20px;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .btn-basico {
+    background-color: #222;
+    color: #FFD700;
+    border: 2px solid #FFD700;
+  }
+
+  .btn-basico:hover {
+    background-color: #FFD700;
+    color: #000;
+  }
+
+  .btn-premium {
+    background-color: #FFD700;
+    color: #000;
+  }
+
+  .btn-premium:hover {
+    background-color: #000;
+    color: #FFD700;
+    border: 2px solid #FFD700;
+  }
+
+  .btn-wsp {
+    background-color: #25D366;
+    color: white;
+  }
+
+  .btn-wsp:hover {
+    background-color: #1DA851;
+  }
+</style>
+
+<section style="text-align: center; padding: 20px;">
+  <div class="perfil-container">
+    <img src="https://d3ltpfxjzvda6e.cloudfront.net/2015/04/24/shark-cap-red.jpg" alt="Foto de perfil" style="width: 100%; height: 100%; object-fit: cover;">
+  </div>
+
+  <h2 style="margin: 10px 0; font-size: 22px; color: #FFD700;">Preflop Victory</h2>
+  <p style="font-size: 15px; color: #ccc; padding: 0 10px;">
+    Herramientas para mejorar tu juego preflop. Usá el Visor Básico gratis o desbloqueá el Premium con acceso al Curso.
+  </p>
+
+  <a href="https://tusitio.com/visor-basico" class="bio-boton btn-basico">🎯 Probar Visor Básico</a>
+  <a href="https://tusitio.com/curso-premium" class="bio-boton btn-premium">🔓 Visor Premium + Curso</a>
+  <a href="https://wa.me/1234567890" class="bio-boton btn-wsp">💬 Consultar por WhatsApp</a>
+</section>
+
+
+
+
+  <div class="footer-nav">
+    <button onclick="alert('Inicio')">Inicio</button>
+    <button onclick="alert('Visor')">Visor</button>
+    <button onclick="alert('Bonos')">Bonos</button>
+  </div>
+
+</body>
+</html>
