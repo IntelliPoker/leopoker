@@ -73,22 +73,39 @@
       box-shadow: 0 -2px 5px rgba(255, 215, 0, 0.2);
     }
 
+    .
+     .footer-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--bg-primary);
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 12px 0;
+      backdrop-filter: blur(5px);
+    }
+
     .footer-nav button {
-      background-color: #FFD700; /* amarillo */
+      background-color: var(--accent);
       border: none;
       font-size: 16px;
       font-weight: bold;
       color: #000;
       padding: 10px 20px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease;
+      min-width: 100px;
+      text-align: center;
     }
 
     .footer-nav button:hover {
       background-color: #000;
-      color: #FFD700;
-      border: 2px solid #FFD700;
+      color: var(--accent);
+      outline: 2px solid var(--accent);
+      transform: translateY(-2px);
     }
   </style>	 
  
