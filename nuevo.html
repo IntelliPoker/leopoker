@@ -3,101 +3,74 @@
 <head>
 <title>Visor de Rangos | Leo Poker R®</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- Viewport corregido -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <style>
-@media (max-width: 99%) {
-    .header-button {
-        white-space: normal;
-        line-height: 1.3;
-        padding: 8px 3px;
-        font-size: 13px;
-    }
-}
-    /* Reset del body */
-    body {
-        margin: 0;
-        padding: 15px 10px 90px; /* Padding reducido en los lados */
-        width: 100%;
-        overflow-x: hidden; /* Previene scroll horizontal */
-        box-sizing: border-box;
-    }
-
-    /* Contenedor principal ajustado */
-    .main-container {
-        max-width: 100%;
-        margin: 0 auto;
-        padding: 0 5px;
-    }
-
-    /* Botonera optimizada */
+    /* Estilos para la botonera */
     .header-nav {
-        display: flex;
-        justify-content: space-between; /* Distribución óptima */
-        gap: 5px; /* Espacio mínimo entre botones */
-        margin-bottom: 20px;
-        padding: 5px 0;
-        width: 100%;
-        box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+      margin-bottom: 20px;
+      padding: 5px 0;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .header-button {
-        flex: 1;
-        min-width: 0; /* Permite compresión */
-        background: linear-gradient(135deg, #2c3e50, #4a6491);
-        color: white;
-        padding: 10px 5px;
-        font-size: 14px;
-        font-weight: bold;
-        border: 1px solid rgba(255, 215, 0, 0.3);
-        border-radius: 6px;
-        text-align: center;
-        text-decoration: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      flex: 1;
+      min-width: 0;
+      background: linear-gradient(135deg, #2c3e50, #4a6491);
+      color: white;
+      padding: 10px 5px;
+      font-size: 14px;
+      font-weight: bold;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 6px;
+      text-align: center;
+      text-decoration: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
-    /* Ajustes progresivos para pantallas más grandes */
+    /* Media queries para la botonera */
     @media (min-width: 360px) {
-        .header-button {
-            padding: 10px 8px;
-            font-size: 14px;
-        }
+      .header-button {
+        padding: 10px 8px;
+        font-size: 14px;
+      }
     }
 
     @media (min-width: 400px) {
-        body {
-            padding: 20px 15px 90px;
-        }
-        .header-button {
-            padding: 12px 10px;
-            font-size: 15px;
-        }
+      .header-button {
+        padding: 12px 10px;
+        font-size: 15px;
+      }
     }
 
     @media (min-width: 480px) {
-        .header-nav {
-            gap: 10px;
-        }
-        .header-button {
-            padding: 12px 15px;
-            font-size: 16px;
-        }
+      .header-nav {
+        gap: 10px;
+      }
+      .header-button {
+        padding: 12px 15px;
+        font-size: 16px;
+      }
     }
 
     @media (min-width: 768px) {
-        .header-nav {
-            justify-content: center;
-            gap: 15px;
-        }
-        .header-button {
-            flex: 0 1 auto;
-            padding: 12px 20px;
-        }
+      .header-nav {
+        justify-content: center;
+        gap: 15px;
+      }
+      .header-button {
+        flex: 0 1 auto;
+        padding: 12px 20px;
+      }
     }
 
+    /* Mantén todos tus otros estilos existentes */
     :root {
       --bg-primary: #0a0a0a;
       --bg-secondary: #121212;
@@ -114,136 +87,10 @@
       background-color: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    h1, h2, h3 {
-      color: var(--accent);
-      margin-top: 0;
-    }
-
-    h1 {
-      font-size: 2rem;
-      text-align: center;
-      margin-bottom: 10px;
-      position: relative;
-      padding-bottom: 10px;
-    }
-
-    h1:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 2px;
-      background: var(--accent);
-    }
-
-    h2 {
-      font-size: 1.5rem;
-      margin-bottom: 15px;
-    }
-
-    h3 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-    }
-
-    .bloque {
-      margin-bottom: 30px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .intro-text {
-      text-align: center;
-      font-size: 1.1rem;
-      margin-bottom: 30px;
-      color: var(--text-secondary);
-    }
-
-    .etapa-container {
-      display: grid;
-      gap: 15px;
-      margin: 20px 0;
-    }
-
-    .etapa {
-      background-color: var(--bg-secondary);
-      border-left: 4px solid var(--accent);
-      padding: 15px;
-      border-radius: 6px;
-      box-shadow: var(--card-shadow);
-      transition: transform 0.2s;
-    }
-
-    .etapa:hover {
-      transform: translateX(5px);
-    }
-
-    .etapa:nth-child(1) {
-      border-left-color: #4CAF50;
-    }
-
-    .etapa:nth-child(2) {
-      border-left-color: #2196F3;
-    }
-
-    .etapa:nth-child(3) {
-      border-left-color: #FF5722;
-    }
-
-    .card {
-      background-color: var(--bg-secondary);
-      padding: 15px;
-      border-radius: 8px;
-      margin: 15px 0;
-      box-shadow: var(--card-shadow);
-      border-top: 1px solid rgba(255, 215, 0, 0.1);
-    }
-
-    .regla {
-      border-left: 4px solid #FF5252;
-    }
-
-    .paso {
-      border-left: 4px solid #4CAF50;
-    }
-
-    .error {
-      border-left: 4px solid #FF5252;
-    }
-
-    .ganancia {
-      border-left: 4px solid #2196F3;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    li {
-      margin-bottom: 8px;
-    }
-
-    .highlight-box {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      margin: 30px auto;
-      max-width: 600px;
-    }
-
-    .highlight-box p {
-      margin: 0;
-      font-size: 1.1rem;
-    }
-
-    .footer-nav {
+        .footer-nav {
       position: fixed;
       bottom: 0;
       left: 0;
@@ -323,27 +170,25 @@
       font-size: 0.9rem;
       margin-top: 10px;
     }
-  </style>
 </style>
 </head>
 <body>
-<div class="main-container">
-    <!-- Botonera optimizada -->
-    <div class="header-nav">
-        <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">⚔️ Contra</a>
-        <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">🛡️ Defensa</a>
-        <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">☰ Menú</a>
-    </div>
 
+<!-- Botonera optimizada -->
+<div class="header-nav">
+  <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">⚔️ Contraataque</a>
+  <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">🛡️ Defensa</a>
+  <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">☰ Menú</a>
+</div>
+
+<!-- Iframes y contenido (EXACTAMENTE como lo tenías) -->
 <p>
 <iframe id="T"
     title="Mil888"
-    
     height="0"
     scrolling="no"
     src="Mil888.html">
 </iframe>
-
 </p>
 
 <p>
@@ -354,10 +199,7 @@
     scrolling="no"
     src="torneos2.html#5">
 </iframe>
-
 </p>
-
-
 
 <div class="footer-nav">
   <a href="bio.html">
@@ -372,9 +214,3 @@
 </div>
 </body>
 </html>
-</div>
-</body>
-</html>
-
-
-
