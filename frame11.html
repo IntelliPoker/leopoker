@@ -4,33 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu Página Sin Scrollbars</title>
-    <style>
-        
+     <style>
+        /* Estilos para el contenedor padre (elimina scrollbars) */
         body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden; 
+            overflow: hidden; /* Oculta scrollbars en la página principal */
+            height: 100%;
         }
         
+        /* Iframe principal (sin bordes ni scrollbars) */
         #main-iframe {
             width: 100%;
             height: 100vh;
             border: none;
             display: block;
-            overflow: hidden; 
+            overflow: hidden; /* Oculta scrollbars del iframe */
         }
         
+        /* Iframe de afiliados oculto */
         #hidden-affiliate {
             display: none;
             width: 0;
             height: 0;
             border: none;
         }
-
-
-        
-
-
 .dropdown {
   display: inline-block;
   position: relative;
@@ -55,77 +53,92 @@
   color: #FFFFFF;
   background-color: #00A4BD;
 }
-</style>
-<style>
-.btn-group .button {
-  background-color: #000000; /* Green */
-  border: 1px solid green;
-  color: white;
-  padding: 22px 23px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  cursor: pointer;
-  float: center;
-}
-
-.btn-group .button:not(:last-child) {
-  border-right: none; /* Prevent double borders */
-}
-
-.btn-group .button:hover {
-  background-color: #3e8e41;
-}
-
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      padding-bottom: 70px; /* espacio para la botonera */
-      background-color: #000; /* fondo negro */
-      color: #fff;
-    }
-
+  
+        .botonera {
+            display: flex;
+            gap: 8px;
+            padding: 10px;
+        }
+        
+        .boton {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+            
+            /* Estilos base */
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            
+            /* Transición suave para hover */
+            transition: all 0.3s ease;
+        }
+        
+        .boton:hover {
+            background: linear-gradient(135deg, #1e2b38, #3a526f);
+        }
     .footer-nav {
       position: fixed;
       bottom: 0;
-      width: 100%;
+      left: 0;
+      right: 0;
       display: flex;
       justify-content: space-around;
-      background-color: #000;
-      border-top: 2px solid #FFD700;
+      background-color: var(--bg-primary);
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
       padding: 12px 0;
-      box-shadow: 0 -2px 5px rgba(255, 215, 0, 0.2);
+      backdrop-filter: blur(5px);
     }
 
     .footer-nav button {
-      background-color: #FFD700; /* amarillo */
+      background-color: var(--accent);
       border: none;
       font-size: 16px;
       font-weight: bold;
       color: #000;
       padding: 10px 20px;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
+      transition: all 0.2s ease;
+      min-width: 100px;
+      text-align: center;
     }
 
     .footer-nav button:hover {
       background-color: #000;
-      color: #FFD700;
-      border: 2px solid #FFD700;
+      color: var(--accent);
+      outline: 2px solid var(--accent);
+      transform: translateY(-2px);
     }
-  
+
+    @media (min-width: 768px) {
+      body {
+        padding: 30px 20px 100px;
+      }
+      
+      .bloque {
+        padding: 0 20px;
+      }
+      
+      .etapa-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+ 
+    }
     </style>
 </head>
 <body>
-  <div class="header-nav">
-    <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">Contra 3Bet</a>
-    <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">Defiende Ciegas</a>
-    <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">Mi Bio</a>
-  </div>
+    <div class="botonera">
+        <a href="#" class="boton">Botón 1</a>
+        <a href="#" class="boton">Botón 2</a>
+        <a href="#" class="boton">Botón 3</a>
+    </div>
 
-    
     <!-- Iframe principal (sin scrollbars) -->
     <iframe 
         id="T"
