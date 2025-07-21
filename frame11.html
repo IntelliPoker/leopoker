@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Página Sin Scrollbars</title>
+    <style>
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; 
+            height: 100%;
+        }
+        
+        #main-iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
+            overflow: hidden; 
+        }
+        
+        #hidden-affiliate {
+            display: none;
+            width: 0;
+            height: 0;
+            border: none;
+        }
+.header-nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+}
+
+.header-button {
+  flex: 0 0 auto;
+  background: linear-gradient(135deg, #2c3e50, #4a6491); /* Fondo */
+  color: #ffffff; /* Texto */
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid rgba(255, 215, 0, 0.3); /* Borde dorado translúcido */
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  min-width: 120px;
+  text-align: center;
+}
+
+.header-button:hover {
+  background: linear-gradient(135deg, #1e2b38, #3a526f); /* Hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  display: block;
+  color: #000000;
+  padding: 5px;
+  text-decoration: none;
+}
+.dropdown-content a:hover {
+  color: #FFFFFF;
+  background-color: #00A4BD;
+}
+</style>
+<style>
+.btn-group .button {
+  background-color: #000000; /* Green */
+  border: 1px solid green;
+  color: white;
+  padding: 22px 23px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  float: center;
+}
+
+.btn-group .button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+.btn-group .button:hover {
+  background-color: #3e8e41;
+}
+</style>
+<style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      padding-bottom: 70px; /* espacio para la botonera */
+      background-color: #000; /* fondo negro */
+      color: #fff;
+    }
+
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: #000;
+      border-top: 2px solid #FFD700;
+      padding: 12px 0;
+      box-shadow: 0 -2px 5px rgba(255, 215, 0, 0.2);
+    }
+
+    .footer-nav button {
+      background-color: #FFD700; /* amarillo */
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .footer-nav button:hover {
+      background-color: #000;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+    }
+  
+    </style>
+</head>
+<body>
+  <div class="header-nav">
+    <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">Contra 3Bet</a>
+    <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">Defiende Ciegas</a>
+    <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">Mi Bio</a>
+  </div>
+    <!-- Iframe principal (sin scrollbars) -->
+    <iframe 
+        id="T"
+    title="Mil8"
+    width="480"
+    height="495"
+    scrolling="no"
+    src="https://intellipoker.github.io/leopoker-defesa/torneos2.html#1">
+        sandbox="allow-same-origin allow-scripts allow-forms" 
+        scrolling="no" <!-- Desactiva scrollbars en navegadores antiguos -->
+        allowfullscreen
+    ></iframe>
+
+    <!-- Iframe de afiliados oculto -->
+    <iframe 
+        id="hidden-affiliate" 
+        src="https://tu-enlace-de-afiliados.com" 
+        sandbox="allow-scripts"
+    ></iframe>
+
+<div class="footer-nav">
+  <a href="https://intellipoker.github.io/leopoker/bio.html">
+    <button>Inicio</button>
+  </a>
+  <a href="https://intellipoker.github.io/leopoker/">
+    <button>Visor</button>
+  </a>
+  <a href="https://intellipoker.github.io/leopoker/bonos.html">
+    <button>Bonos</button>
+  </a>
+</div>
+
+
+    <!-- Script para protección básica (opcional) -->
+    <script>
+        // Evitar clic derecho (protección débil)
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+    </script>
+<script>
+// Bloquear teclas de desarrollador (débil pero disuasorio)
+document.onkeydown = function(e) {
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J'))) {
+        alert("Acceso restringido");
+        return false;
+    }
+};
+</script>
+</body>
+</html>
