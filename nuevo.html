@@ -7,31 +7,58 @@
 .header-nav {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 8px;
   margin-bottom: 20px;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 10px 0;
+  padding: 10px 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .header-button {
-  flex: 0 0 auto;
-  background: linear-gradient(135deg, #2c3e50, #4a6491); /* Fondo */
-  color: #ffffff; /* Texto */
-  padding: 12px 20px;
-  font-size: 16px;
+  flex: 1 1 auto;
+  min-width: 0; /* Permite que los botones se encojan */
+  background: linear-gradient(135deg, #2c3e50, #4a6491);
+  color: #ffffff;
+  padding: 12px 5px;
+  font-size: 14px;
   font-weight: bold;
-  border: 1px solid rgba(255, 215, 0, 0.3); /* Borde dorado translúcido */
+  border: 1px solid rgba(255, 215, 0, 0.3);
   border-radius: 8px;
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  width: 32%;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Media Queries para diferentes tamaños */
+@media (min-width: 480px) {
+  .header-button {
+    padding: 12px 10px;
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  .header-nav {
+    gap: 15px;
+  }
+  .header-button {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header-button {
+    flex: 0 1 auto; /* Vuelve a tamaño automático en pantallas grandes */
+  }
 }
 
 .header-button:hover {
-  background: linear-gradient(135deg, #1e2b38, #3a526f); /* Hover */
+  background: linear-gradient(135deg, #1e2b38, #3a526f);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
@@ -266,13 +293,11 @@
 </head>
 <body>
 
-
 <div class="header-nav">
-  <a href="https://intellipoker.github.io/leopoker-contra/" rel="nofollow" class="header-button">Contra Ataque</a>
-  <a href="https://intellipoker.github.io/leopoker-defesa/" rel="nofollow" class="header-button">Defensa</a>
-  <a href="https://intellipoker.github.io/leopoker/bio.html" rel="nofollow" class="header-button">Menu</a>
+  <a href="https://intellipoker.github.io/leopoker-contra/" rel="nofollow" class="header-button">⚔️ Contraataque</a>
+  <a href="https://intellipoker.github.io/leopoker-defesa/" rel="nofollow" class="header-button">🛡️ Defensa</a>
+  <a href="https://intellipoker.github.io/leopoker/bio.html" rel="nofollow" class="header-button">☰ Menú</a>
 </div>
-
 
 
 <p>
