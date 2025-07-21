@@ -1,67 +1,94 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 <head>
-
 <title>Visor de Rangos | Leo Poker R®</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
-	<style>
-.header-nav {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px;
-  padding: 10px 5px;
-  width: 100%;
-  box-sizing: border-box;
-}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- Viewport corregido -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+    /* Reset del body */
+    body {
+        margin: 0;
+        padding: 15px 10px 90px; /* Padding reducido en los lados */
+        width: 100%;
+        overflow-x: hidden; /* Previene scroll horizontal */
+        box-sizing: border-box;
+    }
 
-.header-button {
-  flex: 1 1 auto;
-  min-width: 0; /* Permite que los botones se encojan */
-  background: linear-gradient(135deg, #2c3e50, #4a6491);
-  color: #ffffff;
-  padding: 12px 5px;
-  font-size: 14px;
-  font-weight: bold;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  border-radius: 8px;
-  text-decoration: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+    /* Contenedor principal ajustado */
+    .main-container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 5px;
+    }
 
-/* Media Queries para diferentes tamaños */
-@media (min-width: 480px) {
-  .header-button {
-    padding: 12px 10px;
-    font-size: 15px;
-  }
-}
+    /* Botonera optimizada */
+    .header-nav {
+        display: flex;
+        justify-content: space-between; /* Distribución óptima */
+        gap: 5px; /* Espacio mínimo entre botones */
+        margin-bottom: 20px;
+        padding: 5px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-@media (min-width: 768px) {
-  .header-nav {
-    gap: 15px;
-  }
-  .header-button {
-    padding: 12px 20px;
-    font-size: 16px;
-  }
-}
+    .header-button {
+        flex: 1;
+        min-width: 0; /* Permite compresión */
+        background: linear-gradient(135deg, #2c3e50, #4a6491);
+        color: white;
+        padding: 10px 5px;
+        font-size: 14px;
+        font-weight: bold;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        border-radius: 6px;
+        text-align: center;
+        text-decoration: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
 
-@media (min-width: 1024px) {
-  .header-button {
-    flex: 0 1 auto; /* Vuelve a tamaño automático en pantallas grandes */
-  }
-}
+    /* Ajustes progresivos para pantallas más grandes */
+    @media (min-width: 360px) {
+        .header-button {
+            padding: 10px 8px;
+            font-size: 14px;
+        }
+    }
 
-.header-button:hover {
-  background: linear-gradient(135deg, #1e2b38, #3a526f);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
+    @media (min-width: 400px) {
+        body {
+            padding: 20px 15px 90px;
+        }
+        .header-button {
+            padding: 12px 10px;
+            font-size: 15px;
+        }
+    }
+
+    @media (min-width: 480px) {
+        .header-nav {
+            gap: 10px;
+        }
+        .header-button {
+            padding: 12px 15px;
+            font-size: 16px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .header-nav {
+            justify-content: center;
+            gap: 15px;
+        }
+        .header-button {
+            flex: 0 1 auto;
+            padding: 12px 20px;
+        }
+    }
 
     :root {
       --bg-primary: #0a0a0a;
@@ -289,21 +316,27 @@
       margin-top: 10px;
     }
   </style>
- 
+</style>
 </head>
 <body>
+<div class="main-container">
+    <!-- Botonera optimizada -->
+    <div class="header-nav">
+        <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">⚔️ Contra</a>
+        <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">🛡️ Defensa</a>
+        <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">☰ Menú</a>
+    </div>
 
-<div class="header-nav">
-  <a href="https://intellipoker.github.io/leopoker-contra/" rel="nofollow" class="header-button">⚔️ Contraataque</a>
-  <a href="https://intellipoker.github.io/leopoker-defesa/" rel="nofollow" class="header-button">🛡️ Defensa</a>
-  <a href="https://intellipoker.github.io/leopoker/bio.html" rel="nofollow" class="header-button">☰ Menú</a>
-</div>
+<p>
+<iframe id="T"
+    title="Mil888"
+    
+    height="0"
+    scrolling="no"
+    src="Mil888.html">
+</iframe>
 
-
-
-
-
-
+</p>
 
 <p>
 <iframe id="T"
@@ -331,3 +364,9 @@
 </div>
 </body>
 </html>
+</div>
+</body>
+</html>
+
+
+
