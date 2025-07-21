@@ -1,216 +1,153 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<title>Visor de Rangos | Leo Poker R®</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<style>
-    /* Estilos para la botonera */
-    .header-nav {
-      display: flex;
-      justify-content: space-between;
-      gap: 5px;
-      margin-bottom: 20px;
-      padding: 5px 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Visor de Rangos | Leo Poker R®</title>
+    <style>
+        /* Variables de color */
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #121212;
+            --accent: #FFD700;
+            --text-primary: #C0C0C0;
+            --text-secondary: #b0b0b0;
+            --card-shadow: 0 4px 6px rgba(255, 215, 0, 0.1);
+        }
 
-    .header-button {
-      flex: 1;
-      min-width: 0;
-      background: linear-gradient(135deg, #2c3e50, #4a6491);
-      color: white;
-      padding: 10px 5px;
-      font-size: 14px;
-      font-weight: bold;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 6px;
-      text-align: center;
-      text-decoration: none;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
+        /* Estilos base */
+        body {
+            margin: 0;
+            padding: 20px 15px 90px;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    /* Media queries para la botonera */
-    @media (min-width: 360px) {
-      .header-button {
-        padding: 10px 8px;
-        font-size: 14px;
-      }
-    }
+        /* Botonera superior */
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 5px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
 
-    @media (min-width: 400px) {
-      .header-button {
-        padding: 12px 10px;
-        font-size: 15px;
-      }
-    }
+        .header-button {
+            flex: 1;
+            min-width: 0;
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 10px 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
 
-    @media (min-width: 480px) {
-      .header-nav {
-        gap: 10px;
-      }
-      .header-button {
-        padding: 12px 15px;
-        font-size: 16px;
-      }
-    }
+        .header-button:hover {
+            background: linear-gradient(135deg, #1e2b38, #3a526f);
+            transform: translateY(-2px);
+        }
 
-    @media (min-width: 768px) {
-      .header-nav {
-        justify-content: center;
-        gap: 15px;
-      }
-      .header-button {
-        flex: 0 1 auto;
-        padding: 12px 20px;
-      }
-    }
+        /* Iframes */
+        .iframe-container {
+            margin: 15px 0;
+        }
 
-    /* Mantén todos tus otros estilos existentes */
-    :root {
-      --bg-primary: #0a0a0a;
-      --bg-secondary: #121212;
-      --accent: #FFD700;
-      --text-primary: #C0C0C0;
-      --text-secondary: #b0b0b0;
-      --card-shadow: 0 4px 6px rgba(255, 215, 0, 0.1);
-    }
-    
-    body {
-      margin: 0;
-      padding: 20px 15px 90px;
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
+        /* Footer */
         .footer-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-around;
-      background-color: var(--bg-primary);
-      border-top: 1px solid rgba(255, 215, 0, 0.3);
-      padding: 12px 0;
-      backdrop-filter: blur(5px);
-    }
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--bg-primary);
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 12px 0;
+            backdrop-filter: blur(5px);
+        }
 
-    .footer-nav button {
-      background-color: var(--accent);
-      border: none;
-      font-size: 16px;
-      font-weight: bold;
-      color: #000;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      min-width: 100px;
-      text-align: center;
-    }
+        .footer-nav button {
+            background-color: var(--accent);
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 100px;
+        }
 
-    .footer-nav button:hover {
-      background-color: #000;
-      color: var(--accent);
-      outline: 2px solid var(--accent);
-      transform: translateY(-2px);
-    }
+        .footer-nav button:hover {
+            background-color: #000;
+            color: var(--accent);
+            outline: 2px solid var(--accent);
+            transform: translateY(-2px);
+        }
 
-    @media (min-width: 768px) {
-      body {
-        padding: 30px 20px 100px;
-      }
-      
-      .bloque {
-        padding: 0 20px;
-      }
-      
-      .etapa-container {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+        /* Responsive */
+        @media (min-width: 480px) {
+            .header-nav {
+                gap: 10px;
+            }
+            .header-button {
+                padding: 12px 15px;
+                font-size: 16px;
+            }
+        }
 
-    /* Nuevos estilos para el botón CTA */
-    .cta-button {
-      background: linear-gradient(to right, #FFD700, #FFA500);
-      color: #000;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-block;
-      margin: 20px auto;
-      text-decoration: none;
-      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-    }
-
-    .cta-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
-    }
-
-    .cta-container {
-      text-align: center;
-      margin: 30px 0;
-    }
-
-    .cta-note {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      margin-top: 10px;
-    }
-</style>
+        @media (min-width: 768px) {
+            body {
+                padding: 30px 20px 100px;
+            }
+            .header-nav {
+                justify-content: center;
+                gap: 15px;
+            }
+            .header-button {
+                flex: 0 1 auto;
+                padding: 12px 25px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- Botonera optimizada -->
-<div class="header-nav">
-  <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">⚔️ Contraataque</a>
-  <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">🛡️ Defensa</a>
-  <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">☰ Menú</a>
-</div>
+    <!-- Botonera superior -->
+    <div class="header-nav">
+        <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">⚔️ Contraataque</a>
+        <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">🛡️ Defensa</a>
+        <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">☰ Menú</a>
+    </div>
 
-<!-- Iframes y contenido (EXACTAMENTE como lo tenías) -->
-<p>
-<iframe id="T"
-    title="Mil888"
-    height="0"
-    scrolling="no"
-    src="Mil888.html">
-</iframe>
-</p>
+    <!-- Iframes -->
+    <div class="iframe-container">
+        <iframe id="T" title="Mil888" height="0" scrolling="no" src="Mil888.html"></iframe>
+    </div>
 
-<p>
-<iframe id="T"
-    title="Mil8"
-    width="470"
-    height="495"
-    scrolling="no"
-    src="torneos2.html#5">
-</iframe>
-</p>
+    <div class="iframe-container">
+        <iframe id="T" title="Mil8" width="470" height="495" scrolling="no" src="torneos2.html#5"></iframe>
+    </div>
 
-<div class="footer-nav">
-  <a href="bio.html">
-    <button>Inicio</button>
-  </a>
-  <a href="index.html">
-    <button>Visor</button>
-  </a>
-  <a href="desafio18.html">
-    <button>Desafio!</button>
-  </a>
-</div>
+    <!-- Footer -->
+    <div class="footer-nav">
+        <a href="bio.html"><button>Inicio</button></a>
+        <a href="index.html"><button>Visor</button></a>
+        <a href="desafio18.html"><button>Desafio!</button></a>
+    </div>
+
 </body>
 </html>
