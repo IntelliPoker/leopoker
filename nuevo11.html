@@ -2,7 +2,8 @@
 <head>
 
 <title>Visor de Rangos | Leo Poker R®</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<style>
 
 .header-nav {
@@ -38,6 +39,32 @@
   background: linear-gradient(135deg, #1e2b38, #3a526f);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+.footer-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: nowrap;         /* Asegura una sola línea */
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--bg-primary);
+  border-top: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 12px 0;
+  backdrop-filter: blur(5px);
+  overflow-x: auto;          /* Permite scroll horizontal si el espacio es limitado */
+}
+
+.footer-nav a {
+  flex: 1;                    /* Los botones se expanden proporcionalmente */
+  text-align: center;
+}
+
+.footer-nav button {
+  width: 100%;
+  max-width: 160px;           /* Evita que se estiren mucho */
+  margin: 0 5px;              /* Espaciado horizontal entre botones */
 }
 
     :root {
