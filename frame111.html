@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Página Sin Scrollbars</title>
+     <style>
+        /* Estilos para el contenedor padre (elimina scrollbars) */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Oculta scrollbars en la página principal */
+            height: 100%;
+        }
+        
+        /* Iframe principal (sin bordes ni scrollbars) */
+        #main-iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
+            overflow: hidden; /* Oculta scrollbars del iframe */
+        }
+        
+        /* Iframe de afiliados oculto */
+        #hidden-affiliate {
+            display: none;
+            width: 0;
+            height: 0;
+            border: none;
+        }
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  display: block;
+  color: #000000;
+  padding: 5px;
+  text-decoration: none;
+}
+.dropdown-content a:hover {
+  color: #FFFFFF;
+  background-color: #00A4BD;
+}
+  
+      .botonera {
+            display: flex;
+            justify-content: center;
+            width: 99%;
+            margin: 0 auto;
+            gap: 8px;
+            padding: 10px 0;
+        }
+        
+        .boton {
+            flex: 1; /* Ocupa el espacio disponible equitativamente */
+            max-width: 32%; /* Para 3 botones con gap incluido */
+            padding: 12px 0;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            
+            /* Estilos base */
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            
+            /* Transición suave para hover */
+            transition: all 0.3s ease;
+        }
+        
+        .boton:hover {
+            background: linear-gradient(135deg, #1e2b38, #3a526f);
+        }
+
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--bg-primary);
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 12px 0;
+      backdrop-filter: blur(5px);
+    }
+
+
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      padding-bottom: 70px; /* espacio para la botonera */
+      background-color: #000; /* fondo negro */
+      color: #fff;
+    }
+
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: #000;
+      border-top: 2px solid #FFD700;
+      padding: 12px 0;
+      box-shadow: 0 -2px 5px rgba(255, 215, 0, 0.2);
+    }
+
+    .footer-nav button {
+      background-color: #FFD700; /* amarillo */
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .footer-nav button:hover {
+      background-color: #000;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+    }
+	 
+ 
+    </style>
+</head>
+<body>
+    <div class="botonera">
+        <a href="#" class="boton">Botón 1</a>
+        <a href="#" class="boton">Botón 2</a>
+        <a href="#" class="boton">Botón 3</a>
+    </div>
+
+    <!-- Iframe principal (sin scrollbars) -->
+    <iframe id="T"
+    title="Mil888"
+    
+    height="0"
+    scrolling="no"
+    src="Mil888.html"
+
+       scrolling="no" <!-- Desactiva scrollbars en navegadores antiguos -->
+        allowfullscreen
+    ></iframe>
+        
+
+    <!-- Iframe de afiliados oculto -->
+    <iframe 
+        id="hidden-affiliate" 
+        src="https://tu-enlace-de-afiliados.com" 
+        sandbox="allow-scripts"
+    ></iframe>
+
+<div class="footer-nav">
+  <a href="https://intellipoker.github.io/leopoker/bio.html">
+    <button>Inicio</button>
+  </a>
+  <a href="https://intellipoker.github.io/leopoker/">
+    <button>Visor</button>
+  </a>
+  <a href="https://intellipoker.github.io/leopoker/bonos.html">
+    <button>Bonos</button>
+  </a>
+</div>
+
+
+    <!-- Script para protección básica (opcional) -->
+    <script>
+        // Evitar clic derecho (protección débil)
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+    </script>
+<script>
+// Bloquear teclas de desarrollador (débil pero disuasorio)
+document.onkeydown = function(e) {
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J'))) {
+        alert("Acceso restringido");
+        return false;
+    }
+};
+</script>
+</body>
+</html>
