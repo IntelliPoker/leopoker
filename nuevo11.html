@@ -1,0 +1,318 @@
+﻿<html>
+<head>
+
+<title>Visor de Rangos | Leo Poker R®</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
+	<style>
+
+.header-nav {
+  display: flex;
+  flex-wrap: nowrap; /* ❗ Mantener en una sola línea */
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  overflow-x: auto; /* Habilita scroll horizontal si es necesario */
+  padding: 10px;
+  margin: 20px auto;
+  max-width: 100%;
+}
+
+.header-button {
+  background: linear-gradient(135deg, #2c3e50, #4a6491);
+  color: #ffffff;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap; /* ❗ Evita que el texto se corte o salte de línea */
+  min-width: 130px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  flex-shrink: 0; /* ❗ Evita que se achiquen al forzar en pantallas chicas */
+}
+
+.header-button:hover {
+  background: linear-gradient(135deg, #1e2b38, #3a526f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #121212;
+      --accent: #FFD700;
+      --text-primary: #C0C0C0;
+      --text-secondary: #b0b0b0;
+      --card-shadow: 0 4px 6px rgba(255, 215, 0, 0.1);
+    }
+    
+    body {
+      margin: 0;
+      padding: 20px 15px 90px;
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 10px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .bloque {
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .intro-text {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+    }
+
+    .etapa-container {
+      display: grid;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .etapa {
+      background-color: var(--bg-secondary);
+      border-left: 4px solid var(--accent);
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s;
+    }
+
+    .etapa:hover {
+      transform: translateX(5px);
+    }
+
+    .etapa:nth-child(1) {
+      border-left-color: #4CAF50;
+    }
+
+    .etapa:nth-child(2) {
+      border-left-color: #2196F3;
+    }
+
+    .etapa:nth-child(3) {
+      border-left-color: #FF5722;
+    }
+
+    .card {
+      background-color: var(--bg-secondary);
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      box-shadow: var(--card-shadow);
+      border-top: 1px solid rgba(255, 215, 0, 0.1);
+    }
+
+    .regla {
+      border-left: 4px solid #FF5252;
+    }
+
+    .paso {
+      border-left: 4px solid #4CAF50;
+    }
+
+    .error {
+      border-left: 4px solid #FF5252;
+    }
+
+    .ganancia {
+      border-left: 4px solid #2196F3;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 30px auto;
+      max-width: 600px;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      background-color: var(--bg-primary);
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 12px 0;
+      backdrop-filter: blur(5px);
+    }
+
+    .footer-nav button {
+      background-color: var(--accent);
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .footer-nav button:hover {
+      background-color: #000;
+      color: var(--accent);
+      outline: 2px solid var(--accent);
+      transform: translateY(-2px);
+    }
+
+    @media (min-width: 768px) {
+      body {
+        padding: 30px 20px 100px;
+      }
+      
+      .bloque {
+        padding: 0 20px;
+      }
+      
+      .etapa-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* Nuevos estilos para el botón CTA */
+    .cta-button {
+      background: linear-gradient(to right, #FFD700, #FFA500);
+      color: #000;
+      border: none;
+      padding: 15px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin: 20px auto;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+    }
+
+    .cta-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .cta-note {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+  </style>
+ 
+</head>
+<body>
+
+
+<div class="header-nav">
+  <a href="https://intellipoker.github.io/leopoker-contra/" class="header-button">Contra 3Bet</a>
+  <a href="https://intellipoker.github.io/leopoker-defesa/" class="header-button">Defiende Ciegas</a>
+  <a href="https://intellipoker.github.io/leopoker/bio.html" class="header-button">Mi Bio</a>
+</div>
+
+
+
+<p>
+<iframe id="T"
+    title="Mil888"
+    
+    height="0"
+    scrolling="no"
+    src="Mil888.html">
+</iframe>
+
+</p>
+
+<p>
+<iframe id="T"
+    title="Mil8"
+    width="470"
+    height="495"
+    scrolling="no"
+    src="torneos2.html#5">
+</iframe>
+
+</p>
+
+
+
+<div class="footer-nav">
+  <a href="bio.html">
+    <button>Inicio</button>
+  </a>
+  <a href="index.html">
+    <button>Visor</button>
+  </a>
+  <a href="desafio18.html">
+    <button>Desafio!</button>
+  </a>
+</div>
+</body>
+</html>
