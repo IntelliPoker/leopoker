@@ -2,6 +2,21 @@
 <head>
 
 <title>Tablas</title>
+  <style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Elimina scrollbars dentro del iframe */
+  }
+</style>
+
+<script>
+  // Desactiva botón derecho dentro del iframe
+  document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+  });
+</script>
+
 <style>
 .dropdown {
   display: inline-block;
