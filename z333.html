@@ -1,0 +1,1048 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entrenador Interactivo PLO5 – Flop (IP, HU)</title>
+  <style>
+   :root {
+      --bg: #0b0f14;
+      --card: #121826;
+      --muted: #8aa0b6;
+      --text: #e6eef7;
+      --accent: #4cc9f0;
+      --good: #2dd4bf;
+      --bad: #f87171;
+      --warn: #fbbf24;
+      --beginner: #3b82f6;
+      --intermediate: #a855f7;
+      --advanced: #ef4444;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background: linear-gradient(180deg, #0b0f14, #0c111a 60%);
+      color: var(--text);
+      font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+      min-height: 100vh;
+      padding: 20px 0;
+      padding-bottom: 70px; /* espacio para la botonera */
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header styles */
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #1f2937;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+    
+    .header .subtitle {
+      color: var(--muted);
+      font-size: 15px;
+    }
+    
+    /* Difficulty selector */
+    .difficulty-selector {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    
+    .diff-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      background: #121826;
+      border: 1px solid #1f2937;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .diff-btn.active {
+      background: #1e293b;
+      border-color: #334155;
+      color: var(--text);
+    }
+    
+    .diff-btn.beginner.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+    }
+    
+    .diff-btn.intermediate.active {
+      background: rgba(168, 85, 247, 0.2);
+      border-color: rgba(168, 85, 247, 0.4);
+      color: #c4b5fd;
+    }
+    
+    .diff-btn.advanced.active {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+    
+    /* Main card */
+    .main-card {
+      background: var(--card);
+      border: 1px solid #1f2937;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    
+    /* Meta information */
+    .meta-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 25px;
+      justify-content: center;
+    }
+    
+    .pill {
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #0e1626;
+      border: 1px solid #213042;
+      color: var(--muted);
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+    }
+    
+    .pill.beginner {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+    }
+    
+    .pill.intermediate {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: rgba(168, 85, 247, 0.4);
+      color: #c4b5fd;
+    }
+    
+    .pill.advanced {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+    
+    /* Game board section */
+    .game-board {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #0e1626;
+      border-radius: 12px;
+      border: 1px solid #1f2937;
+    }
+    
+    .section-title {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 15px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .cards-container {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    
+    .card-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 84px;
+      border-radius: 8px;
+      background: #0a0f17;
+      border: 1px solid #22324a;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    }
+    
+    .card-chip.small {
+      width: 48px;
+      height: 67px;
+    }
+    
+    .card-chip b {
+      font-size: 18px;
+    }
+    
+    .card-chip.small b {
+      font-size: 16px;
+    }
+    
+    .s { color: #60a5fa; } 
+    .h { color: #fb7185; } 
+    .d { color: #f59e0b; } 
+    .c { color: #34d399; }
+    
+    /* Context section */
+    .context-section {
+      background: #0e1626;
+      border-radius: 12px;
+      border: 1px solid #1f2937;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    
+    .context-text {
+      font-size: 17px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    
+    /* Actions section */
+    .actions-section {
+      margin-bottom: 25px;
+    }
+    
+    .actions-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    
+    .action-btn {
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: 1px solid #1f2b3a;
+      background: #0e1626;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      font-size: 16px;
+      min-width: 100px;
+      text-align: center;
+    }
+    
+    .action-btn:hover {
+      transform: translateY(-2px);
+      border-color: #2a3b52;
+      background: #131d30;
+    }
+    
+    .action-btn.primary {
+      background: linear-gradient(180deg, #102033, #0e1626);
+      border-color: #2a3b52;
+    }
+    
+    .action-btn.good {
+      border-color: rgba(45, 212, 191, 0.4);
+      box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.2) inset;
+    }
+    
+    .action-btn.bad {
+      border-color: rgba(248, 113, 113, 0.4);
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.2) inset;
+    }
+    
+    /* Feedback section */
+    .feedback-section {
+      margin-bottom: 25px;
+    }
+    
+    .result-box {
+      padding: 20px;
+      border-radius: 12px;
+      background: #0f1724;
+      border: 1px solid #22324a;
+    }
+    
+    .result-box.good {
+      border-color: rgba(45, 212, 191, 0.4);
+    }
+    
+    .result-box.bad {
+      border-color: rgba(248, 113, 113, 0.4);
+    }
+    
+    /* Stats section */
+    .stats-section {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    
+    .stat-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    
+    .stat-dot.correct { background: var(--good); }
+    .stat-dot.incorrect { background: var(--bad); }
+    
+    /* Progress section */
+    .progress-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .progress-bar {
+      flex: 1;
+      height: 12px;
+      background: #0f1724;
+      border: 1px solid #22324a;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #3ddad7);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+    
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #1f2937;
+    }
+    
+    /* Utility classes */
+    .hidden { display: none; }
+    .text-center { text-align: center; }
+    .mt-20 { margin-top: 20px; }
+    .mb-20 { margin-bottom: 20px; }
+    
+    /* Concept tags */
+    .concept-tag {
+      display: inline-block;
+      padding: 5px 10px;
+      background: rgba(76, 201, 240, 0.1);
+      border-radius: 4px;
+      color: var(--accent);
+      font-size: 13px;
+      margin: 5px 5px 5px 0;
+    }
+    
+    /* Equity calculator */
+    .equity-calculator {
+      margin-top: 20px;
+      padding: 15px;
+      background: #0f1724;
+      border-radius: 8px;
+      border: 1px solid #22324a;
+    }
+    
+    .equity-bar {
+      height: 22px;
+      background: #0a0f17;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 10px 0;
+      position: relative;
+    }
+    
+    .equity-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #3ddad7);
+      width: 50%;
+      transition: width 0.5s ease;
+    }
+    
+    .equity-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .card-chip {
+        width: 50px;
+        height: 70px;
+      }
+      
+      .card-chip.small {
+        width: 40px;
+        height: 56px;
+      }
+      
+      .card-chip b {
+        font-size: 16px;
+      }
+      
+      .card-chip.small b {
+        font-size: 14px;
+      }
+      
+      .action-btn {
+        padding: 12px 16px;
+        font-size: 14px;
+        min-width: 80px;
+      }
+      
+      .actions-grid {
+        gap: 8px;
+      }
+      
+      .cards-container {
+        gap: 6px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .card-chip {
+        width: 44px;
+        height: 62px;
+      }
+      
+      .card-chip.small {
+        width: 36px;
+        height: 50px;
+      }
+      
+      .card-chip b {
+        font-size: 14px;
+      }
+      
+      .card-chip.small b {
+        font-size: 12px;
+        margin-top: -2px;
+      }
+      
+      .action-btn {
+        padding: 10px 12px;
+        font-size: 13px;
+        min-width: 70px;
+      }
+      
+      .section-title {
+        font-size: 14px;
+      }
+      
+      .context-text {
+        font-size: 15px;
+      }
+    }
+    
+    /* Footer Navigation */
+    .footer-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: #000;
+      border-top: 2px solid #FFD700;
+      padding: 12px 0;
+      box-shadow: 0 -2px 5px rgba(255, 215, 0, 0.2);
+      z-index: 1000;
+    }
+
+    .footer-nav button {
+      background-color: #FFD700; /* amarillo */
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .footer-nav button:hover {
+      background-color: #000;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1>Entrenador Interactivo PLO5 – Flop (IP, HU)</h1>
+      <div class="subtitle">Selección curada para mejorar decisiones en flop → en posición</div>
+    </header>
+    
+    <!-- Difficulty Selector -->
+    <div class="difficulty-selector" id="difficultySelector">
+      <button class="diff-btn beginner active" data-diff="beginner">Principiante</button>
+      <button class="diff-btn intermediate" data-diff="intermediate">Intermedio</button>
+      <button class="diff-btn advanced" data-diff="advanced">Avanzado</button>
+    </div>
+    
+    <!-- Main Card -->
+    <div class="main-card">
+      <!-- Meta Information -->
+      <div class="meta-info">
+        <span class="pill" id="difficultyPill">Principiante</span>
+        <span class="pill" id="qcount">Mano 1 / 5</span>
+        <span class="pill" id="score">Puntos: 0</span>
+      </div>
+      
+      <!-- Game Board -->
+      <div class="game-board">
+        <div class="section-title">Board</div>
+        <div class="cards-container" id="board"></div>
+        
+        <div class="section-title">Tu mano</div>
+        <div class="cards-container" id="hand"></div>
+      </div>
+      
+      <!-- Context Section -->
+      <div class="context-section">
+        <div class="context-text" id="context"></div>
+      </div>
+      
+      <!-- Actions Section -->
+      <div class="actions-section">
+        <div class="section-title">Selecciona tu acción</div>
+        <div class="actions-grid" id="actions"></div>
+      </div>
+      
+<!-- Feedback Section -->
+<div class="feedback-section">
+  <div id="feedback" class="result-box hidden"></div>
+  <!-- Botón WhatsApp -->
+  <div class="text-center mt-20">
+    <button class="action-btn primary" id="whatsappBtn" style="display:none;">Compartir en WhatsApp</button>
+  </div>
+</div>
+      
+      <!-- Stats Section -->
+      <div class="stats-section">
+        <div class="stat-item"><div class="stat-dot correct"></div> Correctas: <span id="correctCount">0</span></div>
+        <div class="stat-item"><div class="stat-dot incorrect"></div> Incorrectas: <span id="incorrectCount">0</span></div>
+      </div>
+      
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" id="bar"></div>
+        </div>
+        <button class="action-btn primary" id="nextBtn" disabled>Siguiente</button>
+      </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      Consejo: en PLO5 prioriza <b>Nut potential + redraws</b>, controla el bote en boards dinámicos si no tienes la nuts.
+    </div>
+  </div>
+<!-- FOOTER -->
+<div class="footer-nav">
+  <a href="bio.html"><button>Inicio</button></a>
+  <a href="index.html"><button>Visor</button></a>
+  <a href="https://intellipoker.github.io/leopoker/carta11aa.html"><button>Curso!</button></a>
+</div>
+
+  <!-- Footer Navigation -->
+  <div class="footer-nav">
+    <a href="bio.html">
+      <button>Inicio</button>
+    </a>
+    <a href="index.html">
+      <button>Visor</button>
+    </a>
+    <a href="https://intellipoker.github.io/leopoker/carta11aa.html">
+      <button>Curso!</button>
+    </a>
+  </div>
+
+
+  <script>
+    // Datos de las manos
+    const hands = {
+      beginner: [
+        {
+          id: 1,
+          board: ["K♠","9♠","4♦"],
+          hand: ["A♠","Q♠","J♥","7♦","2♣"],
+          context: "Villano apuesta $4 en $6. Heads-up, tú estás en posición.",
+          options: ["Fold","Call","Raise"],
+          correct: "Raise",
+          explain: `Tienes <b>nut flush draw</b> + overcards y backdoors a escalera. Al subir generas <b>fold equity</b> contra Kx sin ♠ y parejas/sets sin redraws, y construyes el bote para cuando completes la <b>nuts</b>. Solo pagar deja que el rival realice equity barata.`,
+          concepts: ["Nut flush draw", "Fold equity", "Backdoors"],
+          equity: 52,
+          equityExplanation: "Nut flush draw (9 outs) + overcards (6 outs) = ~15 outs. En PLO5, 15 outs ≈ 52% de equity contra un rango de top pair y sets."
+        },
+        {
+          id: 2,
+          board: ["J♣","T♦","8♥"],
+          hand: ["Q♠","9♠","7♦","6♣","2♠"],
+          context: "Villano checkea. Heads-up, IP.",
+          options: ["Check","Bet"],
+          correct: "Bet",
+          explain: `Con <b>Q9</b> tienes <b>escalera</b> ya formada (aunque no absoluta). El board es súper dinámico; apuesta para capturar valor de wraps, dobles pares y proyectos, y para evitar que caigan turns que <i>matan acción</i> or te dejen <i>second best</i>.`,
+          concepts: ["Escalera", "Valor bet", "Board dinámico"],
+          equity: 65,
+          equityExplanation: "Escalera formada + proyectos a escalera mayor. Tu mano tiene aproximadamente 65% de equity contra un rango de pares medios y draws."
+        },
+        {
+          id: 3,
+          board: ["A♥","K♦","6♠"],
+          hand: ["A♠","K♠","T♣","9♦","4♠"],
+          context: "Villano apuesta ⅔ del bote. Heads-up, en posición.",
+          options: ["Fold","Call","Raise"],
+          correct: "Raise",
+          explain: `Tienes <b>top two</b> (AK) + backdoors (♠ y conectores). En board rainbow y alto, tu rango IP domina. <b>Raise por valor/protección</b> contra Ax/Kx/dobles peores y para negar equity a proyectos. <i>Call</i> es aceptable, pero perderías valor y permites runouts incómodos.`,
+          concepts: ["Top two", "Protección", "Rainbow board"],
+          equity: 68,
+          equityExplanation: "Top two pair + backdoor flush y straight draws. Aproximadamente 68% de equity contra manos con una pareja o proyectos."
+        },
+        {
+          id: 4,
+          board: ["Q♣","J♦","4♠"],
+          hand: ["T♠","9♠","8♥","7♦","2♣"],
+          context: "Villano checkea. Heads-up, IP.",
+          options: ["Check","Bet"],
+          correct: "Bet",
+          explain: `Tienes <b>open-ended</b> a la K y múltiples backdoors (♠ / conectores). IP y con ventaja de rango sobre boards altos, el <b>c-bet pequeño/medio</b> imprime EV: puedes robar ahora y construir botes cuando mejores en turn (K/♠/8/7/9/T).`,
+          concepts: ["Open-ended", "C-bet", "Ventaja de rango"],
+          equity: 42,
+          equityExplanation: "Open-ended straight draw (8 outs) + backdoor flush draw = ~10-12 outs. Aproximadamente 42% de equity contra un rango de pares altos."
+        },
+        {
+          id: 5,
+          board: ["T♠","8♣","3♦"],
+          hand: ["J♠","9♠","7♥","6♦","2♣"],
+          context: "Villano apuesta ½ bote. Heads-up, IP.",
+          options: ["Fold","Call","Raise"],
+          correct: "Raise",
+          explain: `Tienes un <b>wrap potente</b> (outs a 6/7/9/J/Q) + backdoor ♠. Contra ½ pot, el <b>raise</b> combina fold equity con mucha <b>equity realizada</b>; si te pagan, aún conectas turn con frecuencia. <i>Call</i> es OK vs rivales que 3-betean flop a menudo.`,
+          concepts: ["Wrap", "Equity realizada", "Fold equity"],
+          equity: 48,
+          equityExplanation: "Wrap con 16 outs + backdoor flush. Aproximadamente 48% de equity contra sets y two pairs."
+        }
+      ],
+      intermediate: [
+        {
+          id: 1,
+          board: ["A♠","7♥","3♣"],
+          hand: ["A♦","K♠","Q♥","J♣","T♦"],
+          context: "Villano checkea después de que tú limpeaste preflop. Heads-up, IP.",
+          options: ["Check","Bet pequeño","Bet grande"],
+          correct: "Bet pequeño",
+          explain: `Tienes <b>top pair</b> con nut kicker + <b>wrap superpuesto</b> (outs to K/Q/J/T). En board seco, un bet pequeño extrae valor de manos más débiles (A-x, 7-x) mientras mantienes el control del bote. Un bet grande asusta a manos más débiles y solo te paga lo que te gana.`,
+          concepts: ["Top pair", "Wrap", "Bet de valor", "Board seco"],
+          equity: 62,
+          equityExplanation: "Top pair con nut kicker + wrap de 16 outs. Aproximadamente 62% de equity contra manos con pares medios o proyectos."
+        },
+        {
+          id: 2,
+          board: ["9♥","8♣","6♦"],
+          hand: ["T♥","7♠","5♦","4♣","2♥"],
+          context: "Villano apuesta 75% del bote. Heads-up, IP.",
+          options: ["Fold","Call","Raise"],
+          correct: "Raise",
+          explain: `Tienes la <b>escalera absoluta</b> (T7) con <b>redraws</b> a escalera mayor. En boards tan conectados, raise protege tu mano contra proyectos gratuitos y construye el bote. Villano podría tener T7 también, pero tu redraw a la nuts te da ventaja.`,
+          concepts: ["Escalera absoluta", "Redraws", "Protección"],
+          equity: 72,
+          equityExplanation: "Escalera absoluta + redraws a escalera mayor. Aproximadamente 72% de equity contra proyectos y two pairs."
+        },
+        {
+          id: 3,
+          board: ["K♦","Q♠","2♥"],
+          hand: ["A♠","J♥","T♦","9♣","3♠"],
+          context: "Villano checkea. Heads-up, IP.",
+          options: ["Check","Bet 33%","Bet 66%"],
+          correct: "Bet 33%",
+          explain: `Tienes <b>wrap a la nuts</b> (A-J-T-9) con backdoors. En board alto, un bet pequeño obtiene valor de Kx/Qx mientras mantiene el rango de villano amplio. También te permite ver an turn barato cuando no conectas.`,
+          concepts: ["Wrap a la nuts", "Bet pequeño", "Rango amplio"],
+          equity: 55,
+          equityExplanation: "Wrap a la nuts con 16 outs + overcard. Aproximadamente 55% de equity contra top pair o second pair."
+        },
+        {
+          id: 4,
+          board: ["J♠","7♠","4♦"],
+          hand: ["A♠","K♠","Q♥","6♣","5♦"],
+          context: "Villano apuesta ⅔ del bote. Heads-up, IP.",
+          options: ["Fold","Call","Raise"],
+          correct: "Call",
+          explain: `Tienes <b>nut flush draw</b> con overcards, pero el board es favorable para el rango de villano. Call es correcto porque tu equity es buena pero no excelente, y raise podría enfrentarte a un 3-bet de manos muy fuertes (sets, flush draws superiores).`,
+          concepts: ["Nut flush draw", "Equity", "Rango del oponente"],
+          equity: 45,
+          equityExplanation: "Nut flush draw (9 outs) + overcards (6 outs) = ~15 outs. Aproximadamente 45% de equity contra sets o two pairs."
+        },
+        {
+          id: 5,
+          board: ["T♥","9♦","3♣"],
+          hand: ["K♠","Q♣","J♦","8♥","7♣"],
+          context: "Villano checkea. Heads-up, IP.",
+          options: ["Check","Bet 50%","Bet 100%"],
+          correct: "Bet 50%",
+          explain: `Tienes <b>wrap monstruo</b> (K-Q-J-8-7) con múltiples outs a la escalera absoluta. Un bet de medio bote construye el bote mientras permite que manos más débiles (T9, 99, TT) te paguen. Bet más grande podría foldear estas manos.`,
+          concepts: ["Wrap monstruo", "Construcción de bote", "Extracción de valor"],
+          equity: 58,
+          equityExplanation: "Wrap monstruo con 20+ outs. Aproximadamente 58% de equity contra sets o two pairs."
+        }
+      ],
+      advanced: [
+        {
+          id: 1,
+          board: ["Q♣","8♣","7♠"],
+          hand: ["A♣","K♣","J♥","T♦","9♠"],
+          context: "Villano apuesta 50% del bote en un bote 3-handed. Estás en posición.",
+          options: ["Fold","Call","Raise pequeño","Raise pot"],
+          correct: "Raise pequeño",
+          explain: `Tienes <b>nut flush draw</b>, <b>wrap enorme</b> y <b>backdoor straight draws</b>. En multiway, raise pequeño permite construir el bote con tu equity masiva mientras mantienes iniciativа. Raise pot es demasiado agresivo y puede aislarte sólo contra manos muy fuertes.`,
+          concepts: ["Multiway", "Equity masiva", "Manejo de iniciativa"],
+          equity: 63,
+          equityExplanation: "Nut flush draw + wrap enorme con 20+ outs. Aproximadamente 63% de equity contra manos con sets o two pairs."
+        },
+        {
+          id: 2,
+          board: ["K♠","J♦","5♣"],
+          hand: ["A♠","A♦","Q♥","T♣","9♠"],
+          context: "Villano check-raises tu apuesta de continuación (75% pot). Heads-up, IP.",
+          options: ["Fold","Call","Re-raise","All-in"],
+          correct: "Call",
+          explain: `Tienes <b>top set</b> con <b>wrap</b> a la escalera. Aunque es tentador re-raise, call es mejor porque el board es muy dinámico y tu equity vs el rango de check-raise (sets, two pairs, draws) es excelente. Además, controlas el tamaño del bote si el turn es peligroso.`,
+          concepts: ["Top set", "Check-raise", "Control de bote", "Equity vs rango"],
+          equity: 70,
+          equityExplanation: "Top set + wrap a la escalera. Aproximadamente 70% de equity contra two pairs o proyectos."
+        },
+        {
+          id: 3,
+          board: ["9♠","6♥","4♦"],
+          hand: ["A♠","A♥","K♦","Q♣","J♠"],
+          context: "Villano lidera con bet de 33% del bote. Él es un jugador tight. Heads-up, IP.",
+          options: ["Fold","Call","Raise pequeño","Raise pot"],
+          correct: "Call",
+          explain: `Tienes <b>sobrepareja</b> con <b>wrap premium</b>, pero villano es tight y su pequeño bet indica fuerza (sets, two pairs). Call controla el tamaño del bote y te permite reevaluar en el turn. Raise podría hacerte enfrentar a un re-raise grande de una mano muy fuerte.`,
+          concepts: ["Sobrepareja", "Wrap premium", "Perfil de oponente", "Control de bote"],
+          equity: 52,
+          equityExplanation: "Sobrepareja + wrap premium. Aproximadamente 52% de equity contra un rango fuerte de sets o two pairs."
+        },
+        {
+          id: 4,
+          board: ["T♠","7♣","2♥"],
+          hand: ["8♠","6♦","5♣","4♥","3♠"],
+          context: "Villano checkea después de 3-bet preflop. Heads-up, IP.",
+          options: ["Check","Bet 25%","Bet 50%","Bet 75%"],
+          correct: "Bet 25%",
+          explain: `Tienes <b>escalera de abajo</b> con <b>redraws</b> a escalera mayor. Villano likely tiene un rango de manos altas (AA-KK). Un bet pequeño extrae valor de overpairs mientras parece débil, potentially inducing a raise bluff. Bets más grandes no obtienen más valor de su rango.`,
+          concepts: ["Escalera de abajo", "Inducción", "Rango del oponente", "Bet pequeño"],
+          equity: 38,
+          equityExplanation: "Escalera de abajo con redraws. Aproximadamente 38% de equity contra overpairs."
+        },
+        {
+          id: 5,
+          board: ["A♥","K♦","Q♠"],
+          hand: ["J♠","T♥","9♣","8♦","7♥"],
+          context: "Villano apuesta 100% del bote. Él es un jugador agresivo. Heads-up, IP.",
+          options: ["Fold","Call","Raise","All-in"],
+          correct: "Raise",
+          explain: `Tienes la <b>escalera absoluta</b> con <b>redraw</b> a escalera aún mayor. En board ultra-coordinado, raise es necesario para proteger contra proyectos de flush y escalera. Villano agresivo podría estar bluffeando o semi-bluffeando, así que debes construir el bote ahora.`,
+          concepts: ["Escalera absoluta", "Board coordinado", "Protección", "Contra agresivos"],
+          equity: 75,
+          equityExplanation: "Escalera absoluta con redraw a escalera mayor. Aproximadamente 75% de equity contra proyectos o two pairs."
+        }
+      ]
+    };
+
+    // Elementos del DOM
+    const elBoard = document.getElementById('board');
+    const elHand = document.getElementById('hand');
+    const elContext = document.getElementById('context');
+    const elActions = document.getElementById('actions');
+    const elFeedback = document.getElementById('feedback');
+    const elNext = document.getElementById('nextBtn');
+    const elQCount = document.getElementById('qcount');
+    const elScore = document.getElementById('score');
+    const elBar = document.getElementById('bar');
+    const elDifficultyPill = document.getElementById('difficultyPill');
+    const elCorrectCount = document.getElementById('correctCount');
+    const elIncorrectCount = document.getElementById('incorrectCount');
+    const difficultySelector = document.getElementById('difficultySelector');
+
+    // Variables de estado
+    let currentDifficulty = 'beginner';
+    let idx = 0;
+    let score = 0;
+    let correctCount = 0;
+    let incorrectCount = 0;
+    let answered = false;
+    let currentHands = hands.beginner;
+
+    // Función para determinar la clase de suit de una carta
+    function suitClass(card){
+      const s = card.slice(-1);
+      return s === '♠' ? 's' : s === '♥' ? 'h' : s === '♦' ? 'd' : 'c';
+    }
+
+    // Función para renderizar las cartas
+    function renderCards(container, cards, isSmall = false){
+      container.innerHTML = '';
+      cards.forEach(c => {
+        const div = document.createElement('div');
+        div.className = `card-chip ${suitClass(c)} ${isSmall ? 'small' : ''}`;
+        div.innerHTML = `<b>${c.slice(0,-1)}</b> <span style="position:absolute;bottom:6px;right:8px;opacity:.9;font-size: ${isSmall ? '12px' : '14px'}">${c.slice(-1)}</span>`;
+        container.appendChild(div);
+      });
+    }
+
+    // Función para renderizar la pregunta actual
+    function renderQuestion(){
+      const q = currentHands[idx];
+      answered = false;
+      elFeedback.className = 'result-box hidden';
+      elNext.disabled = true;
+
+      // Actualizar contadores
+      elQCount.textContent = `Mano ${idx+1} / ${currentHands.length}`;
+      elScore.textContent = `Puntos: ${score}`;
+      elCorrectCount.textContent = correctCount;
+      elIncorrectCount.textContent = incorrectCount;
+      elBar.style.width = `${(idx)/currentHands.length*100}%`;
+
+      // Actualizar dificultad
+      elDifficultyPill.textContent = currentDifficulty === 'beginner' ? 'Principiante' : 
+                                    currentDifficulty === 'intermediate' ? 'Intermedio' : 'Avanzado';
+      elDifficultyPill.className = `pill ${currentDifficulty}`;
+
+      // Renderizar cartas
+      renderCards(elBoard, q.board);
+      renderCards(elHand, q.hand, true); // Cartas de mano más pequeñas
+      elContext.textContent = q.context;
+
+      // Renderizar opciones
+      elActions.innerHTML = '';
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'action-btn';
+        btn.textContent = opt;
+        btn.onclick = () => onAnswer(opt);
+        elActions.appendChild(btn);
+      });
+    }
+
+    // Función para manejar la respuesta
+    function onAnswer(opt){
+      if(answered) return;
+      answered = true;
+      const q = currentHands[idx];
+      const correct = opt === q.correct;
+      
+      if(correct) {
+        score++;
+        correctCount++;
+      } else {
+        incorrectCount++;
+      }
+      
+      elScore.textContent = `Puntos: ${score}`;
+      elCorrectCount.textContent = correctCount;
+      elIncorrectCount.textContent = incorrectCount;
+
+      // Estilizar botones
+      Array.from(elActions.children).forEach(b => {
+        if(b.textContent === q.correct) b.classList.add('good');
+        if(b.textContent === opt && !correct) b.classList.add('bad');
+        b.disabled = true;
+      });
+
+      // Mostrar conceptos como tags
+      let conceptsHTML = '';
+      if (q.concepts && q.concepts.length) {
+        conceptsHTML = '<div style="margin-top:15px;">';
+        q.concepts.forEach(concept => {
+          conceptsHTML += `<span class="concept-tag">${concept}</span>`;
+        });
+        conceptsHTML += '</div>';
+      }
+
+      // Crear HTML para equity
+      const equityHTML = `
+        <div class="equity-calculator">
+          <div class="section-title">Estimación de Equity</div>
+          <div class="equity-bar">
+            <div class="equity-fill" style="width: ${q.equity}%"></div>
+          </div>
+          <div class="equity-labels">
+            <span>Tu mano: <span>${q.equity}%</span></span>
+            <span>Rango villano: <span>${100 - q.equity}%</span></span>
+          </div>
+          <div class="text-center mt-20">${q.equityExplanation}</div>
+        </div>
+      `;
+
+      // Mostrar feedback con equity incluido
+      elFeedback.className = `result-box ${correct?'good':'bad'}`;
+      elFeedback.innerHTML = `
+        <b>${correct? '✔ ¡Correcto!':'✖ Mejor opción: '+q.correct}</b><br><br>
+        ${q.explain}${conceptsHTML}
+        ${equityHTML}
+      `;
+
+      elNext.disabled = false;
+    }
+
+    // Event listener para el botón Siguiente
+    elNext.addEventListener('click', () => {
+      if(idx < currentHands.length-1){
+        idx++;
+        renderQuestion();
+      } else {
+        // Finalizar
+        elBar.style.width = '100%';
+        elActions.innerHTML = '';
+        elFeedback.className = 'result-box good';
+        elFeedback.innerHTML = `
+          <b>¡Nivel ${currentDifficulty} completado!</b><br><br>
+          Puntuación: ${score} / ${currentHands.length}. <br>
+          <span style="color: var(--muted)">Correctas: ${correctCount} | Incorrectas: ${incorrectCount}</span><br><br>
+          <span style="color: var(--muted)">¿Quieres practicar otro nivel?</span>
+        `;
+        
+        // Mostrar selector de dificultad otra vez
+        difficultySelector.style.display = 'flex';
+        elNext.disabled = true;
+        document.getElementById('context').textContent = '—';
+        document.getElementById('qcount').textContent = 'Finalizado';
+      }
+    });
+
+    // Configurar selector de dificultad
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Actualizar UI
+        document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Reiniciar juego con nueva dificultad
+        currentDifficulty = btn.dataset.diff;
+        currentHands = hands[currentDifficulty];
+        idx = 0;
+        score = 0;
+        correctCount = 0;
+        incorrectCount = 0;
+        difficultySelector.style.display = 'none';
+        renderQuestion();
+      });
+    });
+
+    // Ocultar selector después de elegir dificultad
+    difficultySelector.style.display = 'none';
+    
+    // Inicializar la aplicación
+    renderQuestion();
+  </script>
+<script>
+  const elWhatsappBtn = document.getElementById('whatsappBtn');
+
+  function onAnswer(opt){
+    if(answered) return;
+    answered = true;
+    const q = currentHands[idx];
+    const correct = opt === q.correct;
+    
+    if(correct) {
+      score++;
+      correctCount++;
+    } else {
+      incorrectCount++;
+    }
+    
+    elScore.textContent = `Puntos: ${score}`;
+    elCorrectCount.textContent = correctCount;
+    elIncorrectCount.textContent = incorrectCount;
+
+    Array.from(elActions.children).forEach(b => {
+      if(b.textContent === q.correct) b.classList.add('good');
+      if(b.textContent === opt && !correct) b.classList.add('bad');
+      b.disabled = true;
+    });
+
+    let conceptsHTML = '';
+    if (q.concepts && q.concepts.length) {
+      conceptsHTML = '<div style="margin-top:15px;">';
+      q.concepts.forEach(concept => {
+        conceptsHTML += `<span class="concept-tag">${concept}</span>`;
+      });
+      conceptsHTML += '</div>';
+    }
+
+    const equityHTML = `
+      <div class="equity-calculator">
+        <div class="section-title">Estimación de Equity</div>
+        <div class="equity-bar">
+          <div class="equity-fill" style="width: ${q.equity}%"></div>
+        </div>
+        <div class="equity-labels">
+          <span>Tu mano: <span>${q.equity}%</span></span>
+          <span>Rango villano: <span>${100 - q.equity}%</span></span>
+        </div>
+        <div class="text-center mt-20">${q.equityExplanation}</div>
+      </div>
+    `;
+
+    elFeedback.className = `result-box ${correct?'good':'bad'}`;
+    elFeedback.innerHTML = `
+      <b>${correct? '✔ ¡Correcto!':'✖ Mejor opción: '+q.correct}</b><br><br>
+      ${q.explain}${conceptsHTML}
+      ${equityHTML}
+    `;
+
+    // Mostrar botón WhatsApp
+    elWhatsappBtn.style.display = 'inline-block';
+
+    elNext.disabled = false;
+  }
+
+  elWhatsappBtn.addEventListener('click', () => {
+    const message = `Estoy estudiando con el Entrenador PLO5 - Nivel Principiante.\nPuntuación: ${score} / ${currentHands.length}\nCorrectas: ${correctCount}, Incorrectas: ${incorrectCount}`;
+    const url = `https://wa.me/5514981401790?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>
+
+
+
+
+
