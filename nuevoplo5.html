@@ -641,10 +641,10 @@
           context: "Villano hace c-bet pot.",
           options: ["Fold","Call","Raise"],
           correct: "Call",
-          explain: `Con set de 6s en flop 9♥6♥3♥ enfrentas c-bet pot → estás en spot marginal: bloqueas color bajo (J♥), pero pierdes vs cualquier flush mejor. El call está bien porque foldear sería demasiado débil, pero hay que ser cuidadoso en turn/river. Raise aquí casi nunca.`,
+          explain: `Con set de 6s en flop 9♥6♥3♥ enfrentas c-bet pot → estás en spot marginal: bloqueas color bajo (J♥), pero pierdes vs cualquier flush. El call está bien porque foldear sería demasiado débil, pero hay que ser cuidadoso en turn/river. Raise aquí casi nunca.`,
           concepts: ["Set medio", "Board monotone", "Control de bote"],
-          equity: 37,
-          equityExplanation: "Aproximadamente 37–42% contra rango fuerte que incluye flushes, overpairs con ♥ y sets mayores."
+          equity: 37, "Aproximadamente 37–42% contra rango fuerte que incluye flushes, overpairs con ♥ y sets mayores."
+          equityExplanation: 
         }
       ],
       intermediate: [
@@ -853,4 +853,5 @@
     renderQuestion();
   </script>
 </body>
+
 </html>
