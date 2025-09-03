@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Compra Confirmada! | Pack Poker PRO</title>
+  <style>
+    :root {
+      --bg-dark: #0a0a0a;
+      --card-bg: #121212;
+      --gold: #FFD700;
+      --hotmart-blue: #0064FF;
+      --whatsapp-green: #25D366;
+      --text-light: #f0f0f0;
+    }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      text-align: center;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .card {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 30px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      border-top: 4px solid var(--gold);
+    }
+    .intro-emoji {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .steps {
+      text-align: left;
+      margin: 30px auto;
+      max-width: 400px;
+      counter-reset: step-counter;
+    }
+    .step {
+      position: relative;
+      padding-left: 50px;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+    }
+    .step::before {
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      position: absolute;
+      left: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--gold);
+      color: #000;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 0 0 4px rgba(255,215,0,0.2);
+    }
+    .option {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      text-align: left;
+      border-left: 4px solid;
+      transition: all 0.3s;
+    }
+    .option-a {
+      border-left-color: var(--hotmart-blue);
+      opacity: 0.8; /* Más discreto */
+    }
+    .option-b {
+      border-left-color: var(--whatsapp-green);
+    }
+    .option-title {
+      font-size: 1.3rem;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 15px;
+      transition: all 0.3s;
+      width: 100%;
+      max-width: 280px;
+      text-align: center;
+    }
+    .btn-hotmart {
+      background: var(--hotmart-blue);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0,100,255,0.3);
+    }
+    .btn-whatsapp {
+      background: var(--whatsapp-green);
+      color: white;
+      box-shadow: 0 4px 15px rgba(37,211,102,0.3);
+    }
+    .btn:hover {
+      transform: translateY(-3px);
+      filter: brightness(1.1);
+    }
+  .testimonial {
+    font-style: italic;
+    background: rgba(255,215,0,0.1);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    border-left: 4px solid var(--gold); /* Cambiado de 3px a 4px para igualar los otros bloques */
+    position: relative;
+  }
+  .testimonial::before {
+    content: """;
+    font-size: 4rem;
+    color: var(--gold); /* Cambiado de --accent a --gold */
+    position: absolute;
+    left: 10px;
+    top: -15px;
+    opacity: 0.3;
+    }
+    .guarantee-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,255,0,0.1);
+      padding: 10px 15px;
+      border-radius: 20px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      border: 1px dashed rgba(0,255,0,0.3);
+    }
+.btn-hotmart {
+  background: var(--hotmart-blue);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,100,255,0.2);
+  padding: 10px 20px; /* más chico */
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="intro-emoji">🦈</div>
+    <h1 style="color: var(--gold); margin-bottom: 5px;">¡Ya casi lo tienes!</h1>
+    <p style="margin-top: 0; font-size: 1.1rem;">Elige cómo quieres recibir tu <strong>Pack Poker PRO</strong>:</p>
+    
+    <div class="steps">
+      <div class="step">Selecciona tu método de pago favorito</div>
+      <div class="step">Completa los datos (solo si eliges Hotmart)</div>
+      <div class="step">Accede a tu Pack <stong>Poker PRO</strong> hoy. Comienza a revender mañana</div>
+    </div>
+
+ 
+
+    <!-- Opción a -->
+    <div class="option option-b">
+      <h3 class="option-title">💬 WhatsApp: 10% Descuento VIP</h3>
+      <p>Obtén un precio especial y atención personalizada por WhatsApp:</p>
+      <ul>
+        <li>🔥 <strong>Paga solo $177</strong> (antes $197)</li>
+        <li>📞 Soporte directo 24/7</li>
+        <li>⚡ Entrega Relámpago</li>
+      </ul>
+      <a href="https://wa.me/5514981401790?text=¡Hola!%20Quiero%20el%2010%%20de%20descuento%20en%20el%20Pack%20Poker%20PRO%20🦈" 
+         class="btn btn-whatsapp">📱 Vía  WhatsApp</a>
+    </div>
+
+      <!-- ⚪ Hotmart -->
+    <div class="option option-a">
+      <h2>Opción Alternativa</h2>
+      <p>
+        Compra a través de la plataforma segura <b>Hotmart</b>.  
+        (Comisiones y precio sin descuento).
+      </p>
+      <a href="https://pay.hotmart.com/P101376762B" class="btn-hotmart">Vía Hotmart</a>
+      <span class="guarantee">🔒 Protegido por Hotmart | 7 días de Garantía</span>
+    </div>
+    
+   <div class="testimonial">
+      <p>"El proceso fue súper rápido. En 10 minutos ya tenía todo en mi email y pude empezar a revenderlo ese mismo día."</p>
+      <p><strong>— Javier M.</strong> | Revendedor</p>
+    </div>
+  </div>
+</body>
+</html>
