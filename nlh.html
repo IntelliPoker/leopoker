@@ -2,9 +2,12 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entrenador Interactivo NLH | 3Bet Pots OOP</title>
+
 <meta property="og:title" content="Entrenador Interactivo NLH | 3Bet Pots OOP" />
 <meta property="og:description" content="Domina el Texas Hold 'em! Toma decisiones claves, mejora tu estrategia y conviértete en un jugador más rentable..." />
-<meta property="og:image" content="https://intellipoker.github.io/leopoker/imagenpnlh.jpeg"" />
+<meta property="og:image" content="https://intellipoker.github.io/leopoker/imagenpnlh.jpeg" />
 <meta property="og:url" content="https://leopoker.com" />
 <meta property="og:type" content="article" />
   <style>
@@ -507,7 +510,7 @@
     <!-- Header -->
     <header class="header">
       <h1>Entrenador Interactivo NLH</h1>
-      <div class="subtitle">Flop (3Bet Pot OOP)</div>
+      <div class="subtitle">3Bet Pots OOP</div>
     </header>
     
     <!-- Difficulty Selector -->
@@ -528,7 +531,7 @@
       
       <!-- Game Board -->
       <div class="game-board">
-        <div class="section-title">Tu Mano</div>
+        <div class="section-title">Tu mano</div>
         <div class="cards-container" id="board"></div>
         
         <div class="section-title">Flop</div>
@@ -572,7 +575,7 @@
     
     <!-- Footer -->
     <div class="footer">
-      Consejo: Sin posición, la <b>Disciplina</b> es tu mejor arma!
+      Sin posición, la <b>disciplina</b> es tu mejor arma!
     </div>
   </div>
 
@@ -589,27 +592,20 @@
       beginner: [
         {
 
-       
           id: 1,
           board: ["A♥","Q♥"],
           hand: ["K♦♣","7♠","3♥"],
           context: "Preflop: eres Big Blind (BB), el Button, abre subiendo. Tú decides hacer un 3-bet. El villano paga tu 3-bet. Tras el Flop eres el primero en hablar",
           options: ["Check","Bet 33%","Bet 66%"],
           correct: "Bet 33%",
-          explain: `El size óptimo en boards secos es <b>25–33% del bote</b>, porque:
-		  
-		  
-		  <br>
-		  <br>👉  Representa fuerza
-		  <br>👉  Niega equity.
-		  <br>👉  Construye rango balanceado
-		  <br>👉  Aprovecha los backdoors<br><br>📌 Excepciones:<br><br>👉 <b>50%</b> → si el rival paga demasiado o con stacks profundos.<br>👉 <b>All-In</b> → solo con SPR bajo (≤2.5)`,
+          explain: `El size óptimo en boards secos es 25–33% del bote, porque: Representa fuerza, Niega equity, Construye rango balanceado y Aprovecha los backdoors...`,
           concepts: ["Equity Denial", "Small CBet", "Backdoor"],
-          equity: 85,
-          equityExplanation: "Equity estimada: 80–90% contra rango amplio (top pair, overpairs, random)."
+          equity: 27,
+          equityExplanation: "Tu mano tiene cerca de un 30% de posibilidades de mejorar y además tienes bastante Fold Equity en ese flop."
         },
-
         
+
+       
       ],
       intermediate: [
         // (Mantenido igual que antes)
@@ -817,5 +813,4 @@
     renderQuestion();
   </script>
 </body>
-
 </html>
