@@ -1,0 +1,576 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLO5 Quiz Trainer</title>
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --card: #121826;
+            --muted: #8aa0b6;
+            --text: #e6eef7;
+            --accent: #4cc9f0;
+            --good: #2dd4bf;
+            --bad: #f87171;
+            --warn: #fbbf24;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(180deg, #0b0f14, #0c111a 60%);
+            color: var(--text);
+            font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+            min-height: 100vh;
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #1f2937;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .header .subtitle {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .position-selector {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .pos-btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #0e1626;
+            border: 1px solid #213042;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 70px;
+        }
+        
+        .pos-btn.active {
+            background: rgba(76, 201, 240, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .pos-btn:hover:not(.active) {
+            background: #1a2438;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .quiz-card {
+            background: var(--card);
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .hand-display {
+            font-size: 24px;
+            margin: 30px 0;
+            padding: 20px;
+            background: #0e1626;
+            border-radius: 12px;
+            border: 1px solid #213042;
+            letter-spacing: 2px;
+        }
+        
+        .decision-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .decision-btn {
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 2px solid;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            max-width: 140px;
+        }
+        
+        .btn-or {
+            background: rgba(45, 212, 191, 0.1);
+            border-color: var(--good);
+            color: var(--good);
+        }
+        
+        .btn-fold {
+            background: rgba(248, 113, 113, 0.1);
+            border-color: var(--bad);
+            color: var(--bad);
+        }
+        
+        .decision-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feedback {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(45, 212, 191, 0.1);
+            border: 1px solid var(--good);
+            color: var(--good);
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid var(--bad);
+            color: var(--bad);
+            display: block;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 16px;
+            color: var(--muted);
+        }
+        
+        .next-btn {
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px auto;
+            display: none;
+            width: 200px;
+        }
+        
+        .next-btn:hover {
+            background: rgba(76, 201, 240, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .card-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 70px;
+            border-radius: 8px;
+            background: #0a0f17;
+            border: 1px solid #22324a;
+            margin: 0 2px;
+            position: relative;
+        }
+        
+        .card-chip b {
+            font-size: 16px;
+        }
+        
+        .s { color: #60a5fa; } 
+        .h { color: #fb7185; } 
+        .d { color: #f59e0b; } 
+        .c { color: #34d399; }
+        
+        .position-info {
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+                
+              <div class="container">
+        
+            <div class="header">
+            <div class="position-selector">
+                <button class="pos-btn" onclick="selectPosition('UTG')">UTG</button>
+                <button class="pos-btn" onclick="selectPosition('MP')">MP</button>
+                <button class="pos-btn" onclick="selectPosition('CO')">CO</button>
+                <button class="pos-btn active" onclick="selectPosition('BU')">BU</button>
+                <button class="pos-btn" onclick="selectPosition('SB')">SB</button>
+            </div>
+        </div>
+        
+        <div class="quiz-card">
+            <div class="score-display" id="scoreDisplay">Aciertos: 0/0 (0%)</div>
+            
+            <div class="hand-display" id="handDisplay">
+                <!-- Las cartas se mostrarán aquí -->
+            </div>
+            
+            <div class="decision-buttons" id="decisionButtons">
+                <button class="decision-btn btn-or" onclick="checkDecision('OR')">OR</button>
+                <button class="decision-btn btn-fold" onclick="checkDecision('FOLD')">FOLD</button>
+            </div>
+            
+            <div class="feedback" id="feedback">
+                <!-- Feedback se mostrará aquí -->
+            </div>
+            
+            <button class="next-btn" id="nextBtn" onclick="nextHand()">Siguiente Mano</button>
+        </div>
+    </div>
+
+<script>
+// =============================
+// PLO5 Quiz Trainer - Todas las Posiciones
+// =============================
+
+const ranks = ["A","K","Q","J","T","9","8","7","6","5","4","3","2"];
+const suits = ["♠","♥","♦","♣"];
+
+// Umbrales por posición (los mismos de tu sistema)
+const UMBRALES = {
+    'UTG': 70,
+    'MP': 60, 
+    'CO': 46.5,
+    'BU': 42.21,
+    'SB': 40  // Podemos ajustar este más adelante
+};
+
+let currentHand = [];
+let score = { correct: 0, total: 0 };
+let currentPosition = 'BU';
+
+// Seleccionar posición
+function selectPosition(pos) {
+    currentPosition = pos;
+    
+    // Actualizar botones activos
+    document.querySelectorAll('.pos-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Actualizar info de posición
+    document.getElementById('positionInfo').textContent = `Umbral: ≥ ${UMBRALES[pos]}`;
+    
+    // Reiniciar quiz si ya había empezado
+    if (score.total > 0) {
+        if (confirm('¿Cambiar posición reiniciará tu progreso. ¿Continuar?')) {
+            resetQuiz();
+        } else {
+            // Revertir la selección
+            document.querySelector(`.pos-btn[onclick="selectPosition('${currentPosition}')"]`).classList.add('active');
+            event.target.classList.remove('active');
+            currentPosition = 'BU';
+            document.getElementById('positionInfo').textContent = `Umbral: ≥ ${UMBRALES['BU']}`;
+        }
+    }
+}
+
+// Reiniciar quiz
+function resetQuiz() {
+    score = { correct: 0, total: 0 };
+    generateRandomHand();
+    updateScoreDisplay();
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('decisionButtons').style.display = 'flex';
+}
+
+// Iniciar el quiz
+function initQuiz() {
+    generateRandomHand();
+    updateScoreDisplay();
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('decisionButtons').style.display = 'flex';
+}
+
+// Generar mano aleatoria
+function generateRandomHand() {
+    currentHand = [];
+    const availableCards = [];
+    
+    // Crear mazo completo
+    for (const rank of ranks) {
+        for (const suit of suits) {
+            availableCards.push(rank + suit);
+        }
+    }
+    
+    // Mezclar mazo
+    for (let i = availableCards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [availableCards[i], availableCards[j]] = [availableCards[j], availableCards[i]];
+    }
+    
+    // Tomar 5 cartas
+    currentHand = availableCards.slice(0, 5);
+    displayHand();
+}
+
+// Mostrar mano
+function displayHand() {
+    const handDisplay = document.getElementById('handDisplay');
+    handDisplay.innerHTML = currentHand.map(card => {
+        const rank = card.slice(0, -1);
+        const suit = card.slice(-1);
+        const colorClass = suit === "♠" ? "s" : suit === "♥" ? "h" : suit === "♦" ? "d" : "c";
+        return `<div class="card-chip"><b class="${colorClass}">${rank}${suit}</b></div>`;
+    }).join('');
+}
+
+// Verificar decisión del usuario
+function checkDecision(decision) {
+    // Ocultar botones de decisión inmediatamente
+    document.getElementById('decisionButtons').style.display = 'none';
+    
+    const pi = calcularIndicePoder(currentHand.join(''));
+    const umbral = UMBRALES[currentPosition];
+    const correctAction = pi >= umbral ? 'OR' : 'FOLD';
+    
+    score.total++;
+    const isCorrect = decision === correctAction;
+    
+    if (isCorrect) {
+        score.correct++;
+        showFeedback('✓ CORRECTO', true);
+    } else {
+        showFeedback(`✗ INCORRECTO - Esta mano es ${correctAction} desde ${currentPosition}`, false);
+    }
+    
+    updateScoreDisplay();
+    
+    // Mostrar botón siguiente
+    document.getElementById('nextBtn').style.display = 'block';
+}
+
+// Mostrar feedback
+function showFeedback(message, isCorrect) {
+    const feedback = document.getElementById('feedback');
+    feedback.textContent = message;
+    feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+}
+
+// Actualizar puntuación
+function updateScoreDisplay() {
+    const percentage = score.total > 0 ? ((score.correct / score.total) * 100).toFixed(1) : 0;
+    document.getElementById('scoreDisplay').textContent = 
+        `Aciertos: ${score.correct}/${score.total} (${percentage}%) - ${currentPosition}`;
+}
+
+// Siguiente mano
+function nextHand() {
+    generateRandomHand();
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    
+    // Mostrar botones de decisión nuevamente
+    document.getElementById('decisionButtons').style.display = 'flex';
+}
+
+// =============================
+// MOTOR ORIGINAL (igual que tu código)
+// =============================
+
+// [El resto del motor se mantiene igual...]
+
+// --- Función: detecta wrap bonus ---
+function detectWrapBonus(uniqueValsDesc) {
+    let wrap = 0;
+    for (let i = 0; i <= uniqueValsDesc.length - 5; i++) {
+        if (uniqueValsDesc[i] - 1 === uniqueValsDesc[i+1] &&
+            uniqueValsDesc[i+1] - 1 === uniqueValsDesc[i+2] &&
+            uniqueValsDesc[i+2] - 1 === uniqueValsDesc[i+3] &&
+            uniqueValsDesc[i+3] - 1 === uniqueValsDesc[i+4]) {
+            wrap += 4.5;
+        }
+    }
+    for (let i = 0; i <= uniqueValsDesc.length - 4; i++) {
+        if (uniqueValsDesc[i] - 1 === uniqueValsDesc[i+1] &&
+            uniqueValsDesc[i+1] - 1 === uniqueValsDesc[i+2] &&
+            uniqueValsDesc[i+2] - 1 === uniqueValsDesc[i+3]) {
+            wrap += 2.759;
+        }
+    }
+    return wrap;
+}
+
+// --- Función: conectividad fuerte ---
+function tieneConectividadFuerte(valoresDesc) {
+    for (let i = 0; i < valoresDesc.length - 2; i++) {
+        if (valoresDesc[i] - valoresDesc[i+2] <= 3) return true;
+    }
+    return false;
+}
+
+// --- Función: suitedness y Axs ---
+function evaluateSuitedness(manoStrOrArray) {
+    const hand = Array.isArray(manoStrOrArray) ? manoStrOrArray.slice() :
+                 (typeof manoStrOrArray === 'string' ? (manoStrOrArray.match(/[AKQJT2-9][♠♥♦♣]/g) || []) : []);
+    if (hand.length !== 5) return 0;
+
+    const suitCount = { '♠':0, '♥':0, '♦':0, '♣':0 };
+    hand.forEach(c => {
+        const suit = c.slice(-1);
+        suitCount[suit] = (suitCount[suit] || 0) + 1;
+    });
+
+    const countsDesc = Object.values(suitCount).sort((a,b)=>b-a);
+    const signature = countsDesc.join('-');
+
+    let axsBonus = 0;
+    for (let i = 0; i < hand.length; i++) {
+        const r = hand[i].slice(0, -1), s = hand[i].slice(-1);
+        if (r === 'A') {
+            const otherSameSuit = hand.some((c, idx) => idx !== i && c.slice(-1) === s);
+            if (otherSameSuit) {
+                axsBonus = Math.max(axsBonus, 4.5);
+                const otherSuitCounts = Object.entries(suitCount).filter(([k,v])=>k!==s && v>=2);
+                if (otherSuitCounts.length >= 1) axsBonus = 3.6;
+            }
+        }
+    }
+
+    const distroBonuses = {
+        '2-2-1-0': 6.3,
+        '3-2-0-0': 3.6,
+        '2-1-1-1': 2.7,
+        '3-1-1-0': 1.8,
+        '4-1-0-0': -6.3,
+    };
+    const distroBonus = distroBonuses[signature] !== undefined ? distroBonuses[signature] : 0;
+
+    const twoSuitPairs = Object.values(suitCount).filter(v=>v>=2).length;
+    let doubleSuitedBonus = (twoSuitPairs >= 2 && axsBonus < 12) ? 4 : 0;
+
+    return axsBonus + distroBonus + doubleSuitedBonus;
+}
+
+// === Núcleo del Power Index ===
+function calcularIndicePoder(mano) {
+    const ranksMap = {A:8,K:5.988,Q:4.4,J:3.6,T:3,9:1.8,8:1.6,7:1.4,6:1.2,5:1,4:0.8,3:0.6,2:0.4};
+    const match = mano.match(/[AKQJT2-9]/g);
+    if (!match || match.length !== 5) return 0;
+    const valores = match.map(c => ranksMap[c]).sort((a,b)=>b-a);
+    const unicos = [...new Set(valores)];
+
+    let penalizacion = 0;
+    let bono = 0;
+
+    const counts = {};
+    valores.forEach(v => counts[v] = (counts[v] || 0) + 1);
+    const paresMedios = Object.entries(counts).some(([v,c]) => (v==1.6 || v==3) && c==2);
+    if(tieneConectividadFuerte(valores) && paresMedios && unicos[0] <= 3) {
+        bono += 9.9;
+    }
+
+    // === FASE 1: FILTRO NUCLEAR ===
+    if (unicos.length === 2 && (valores.filter(v=>v===unicos[0]).length===4 || valores.filter(v=>v===unicos[1]).length===4)) {
+        penalizacion -= 27;
+        return Math.max(0, penalizacion);
+    }
+    if (valores.some(v => valores.filter(x=>x===v).length===3)) {
+        penalizacion -= 22.5;
+        return Math.max(0, penalizacion);
+    }
+
+    const gaps = valores.map((v,i)=> i < valores.length -1 ? valores[i] - valores[i+1] : 0);
+    const maxGap = Math.max(...gaps);
+    const maxValor = Math.max(...valores);
+    if (maxGap >= 4) {
+        if (maxValor <= 7) {
+            penalizacion -= 18;
+        } else if (maxValor <= 11) {
+            penalizacion -= 9.09;
+        }
+    }
+
+    // === FASE 2: BASE ===
+    function calcularBaseUnica(valores) {
+        const valoresUnicos = [...new Set(valores)];
+        const sumaUnicos = valoresUnicos.reduce((a, b) => a + b, 0);
+        const base = (sumaUnicos / 5) * 14.6074618723;
+        return base;
+    }
+    
+    const base = calcularBaseUnica(valores);
+
+    const altas = valores.filter(v => v >= 3);
+    const bajas = valores.filter(v => v <= 1.4);
+    const gapMax = Math.max(...valores.map((v,i)=> i<valores.length-1 ? valores[i]-valores[i+1] : 0));
+    if (altas.length === 2 && bajas.length === 3 && gapMax >= 3.0) {
+        penalizacion -= 7.2;
+    }
+
+    // === FASE 3: BONOS DE ESTRUCTURA ===
+    function bonoPorPar(valores) {
+        const counts = {};
+        valores.forEach(v => counts[v] = (counts[v] || 0) + 1);
+        const pares = Object.entries(counts).filter(([valor, count]) => count === 2);
+        if (pares.length === 0) return 0;
+        const valorPar = parseFloat(pares[0][0]);
+        const bonosPares = {
+            8: 9, 5.988: 7.2, 4.4: 7.2, 3: 11.34, 1.6: 3.6, 1.4: 3.6, 1.2: 2.7, 0.4: 2.55
+        };
+        return bonosPares[valorPar] || 0;
+    }
+
+    bono += detectWrapBonus(unicos);
+    if (tieneConectividadFuerte(valores)) {
+        bono += 1.68111;
+    }
+    bono += bonoPorPar(valores);
+    const suited = evaluateSuitedness(mano);
+    bono += suited;
+
+    const final = Math.max(0, base + bono + penalizacion);
+    return final;
+}
+
+// Iniciar el quiz cuando se carga la página
+window.onload = initQuiz;
+</script>
+</body>
+</html>
