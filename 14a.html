@@ -212,7 +212,7 @@
     width="470"
     height="495"
     scrolling="no"
-    src="https://intellipoker.github.io/leopoker/456.html"
+    src="https://intellipoker.github.io/leopoker/3.html"
     class="iframe-neon">
 </iframe>
 
@@ -233,6 +233,40 @@
     <button>Curso!</button>
   </a>
 </div>
+<script>
+function protegerIframe() {
+    const iframe = document.getElementById('T');
+    
+    // Deshabilitar clic derecho
+    iframe.addEventListener('load', function() {
+        try {
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // Deshabilitar selección de texto
+            iframeDoc.body.style.userSelect = 'none';
+            iframeDoc.body.style.webkitUserSelect = 'none';
+            iframeDoc.body.style.mozUserSelect = 'none';
+            iframeDoc.body.style.msUserSelect = 'none';
+            
+            // Deshabilitar arrastrar imágenes
+            iframeDoc.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+        } catch (error) {
+            console.log('No se puede acceder al contenido del iframe por políticas de seguridad');
+        }
+    });
+}
+
+// Ejecutar cuando la página cargue
+document.addEventListener('DOMContentLoaded', protegerIframe);
+</script>
 </body>
 </html>
 
