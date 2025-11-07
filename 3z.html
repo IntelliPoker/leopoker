@@ -1,0 +1,829 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLO5 Quiz Trainer - FREE desde BTN</title>
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --card: #121826;
+            --muted: #8aa0b6;
+            --text: #e6eef7;
+            --accent: #4cc9f0;
+            --good: #2dd4bf;
+            --bad: #f87171;
+            --warn: #fbbf24;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(180deg, #0b0f14, #0c111a 60%);
+            color: var(--text);
+            font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+            min-height: 100vh;
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #1f2937;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .header .subtitle {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .position-selector {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .pos-btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #0e1626;
+            border: 1px solid #213042;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 70px;
+        }
+        
+        .pos-btn.active {
+            background: rgba(76, 201, 240, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .pos-btn:hover:not(.active) {
+            background: #1a2438;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
+        .quiz-card {
+            background: var(--card);
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .hand-display {
+            font-size: 24px;
+            margin: 30px 0;
+            padding: 20px;
+            background: #0e1626;
+            border-radius: 12px;
+            border: 1px solid #213042;
+            letter-spacing: 2px;
+        }
+        
+        .decision-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .decision-btn {
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 2px solid;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            max-width: 140px;
+        }
+        
+        .btn-or {
+            background: rgba(45, 212, 191, 0.1);
+            border-color: var(--good);
+            color: var(--good);
+        }
+        
+        .btn-fold {
+            background: rgba(248, 113, 113, 0.1);
+            border-color: var(--bad);
+            color: var(--bad);
+        }
+        
+        .decision-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feedback {
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: rgba(45, 212, 191, 0.1);
+            border: 1px solid var(--good);
+            color: var(--good);
+            display: block;
+        }
+        
+        .feedback.incorrect {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid var(--bad);
+            color: var(--bad);
+            display: block;
+        }
+        
+        .score-display {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 16px;
+            color: var(--muted);
+        }
+        
+        .next-btn {
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px auto;
+            display: none;
+            width: 200px;
+        }
+        
+        .next-btn:hover {
+            background: rgba(76, 201, 240, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .card-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 70px;
+            border-radius: 8px;
+            background: #0a0f17;
+            border: 1px solid #22324a;
+            margin: 0 2px;
+            position: relative;
+        }
+        
+        .card-chip b {
+            font-size: 16px;
+        }
+        
+        .s { color: #60a5fa; } 
+        .h { color: #fb7185; } 
+        .d { color: #f59e0b; } 
+        .c { color: #34d399; }
+        
+        .position-info {
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Nuevos estilos para conceptos - IDÉNTICOS A TU PREMIUM */
+        .concept-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 15px;
+        }
+
+        .concept-list li {
+            margin: 0;
+        }
+
+        .concept-tag {
+            text-align: left;
+            display: inline-block;
+            padding: 5px 10px;
+            background: rgba(76, 201, 240, 0.1);
+            border-radius: 4px;
+            color: var(--accent);
+            font-size: 13px;
+            margin: 5px 5px 5px 0;
+            text-align: left;
+            float: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .concept-tag:hover {
+            background: rgba(76, 201, 240, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .concept-link {
+            color: #4cc9f0;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .concept-link:hover {
+            color: #2dd4bf;
+        }
+
+        .premium-badge {
+            background: linear-gradient(45deg, #ffd700, #ffb700);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.6rem;
+            margin-left: 8px;
+            font-weight: bold;
+        }
+
+        /* Modal - EXACTAMENTE IGUAL A TU VERSIÓN PREMIUM */
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 15, 20, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .video-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #121826;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            border: 1px solid #2a3b52;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #8aa0b6;
+        }
+
+        .close-modal:hover {
+            color: #4cc9f0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+            display: none;
+        }
+
+        .video-locked {
+            padding: 20px;
+            border: 2px dashed #4cc9f0;
+            border-radius: 8px;
+            color: #8aa0b6;
+        }
+
+        .buy-btn {
+            margin-top: 15px;
+            padding: 10px 18px;
+            background: linear-gradient(45deg, #ffd700, #ffb700);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #8aa0b6;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>                
+<div class="container">   <div class="header">
+     
+            <div class="position-selector">
+                <button class="pos-btn" onclick="redirectToPremium('UTG')">UTG</button>
+                <button class="pos-btn" onclick="redirectToPremium('MP')">MP</button>
+                <button class="pos-btn" onclick="redirectToPremium('CO')">CO</button>
+                <button class="pos-btn active" onclick="selectPosition('BU')">BU</button>
+                <button class="pos-btn" onclick="redirectToPremium('SB')">SB</button>
+            </div>
+           
+        </div>
+        
+        <div class="quiz-card">
+            <div class="score-display" id="scoreDisplay">Aciertos: 0/0 (0%)</div>
+            
+            <div class="hand-display" id="handDisplay">
+                <!-- Las cartas se mostrarán aquí -->
+            </div>
+            
+            <div class="decision-buttons" id="decisionButtons">
+                <button class="decision-btn btn-or" onclick="checkDecision('OR')">OR</button>
+                <button class="decision-btn btn-fold" onclick="checkDecision('FOLD')">FOLD</button>
+            </div>
+            
+            <div class="feedback" id="feedback">
+                <!-- Feedback se mostrará aquí -->
+            </div>
+            
+            <button class="next-btn" id="nextBtn" onclick="nextHand()">Siguiente Mano</button>
+        </div>
+    </div>
+
+    <!-- Modal - EXACTAMENTE IGUAL A TU VERSIÓN PREMIUM -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeVideoModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+            <iframe id="videoFrame"></iframe>
+            <div class="video-locked" id="videoLocked" style="display:none;">
+                <p>Este video detallado está disponible en nuestro <strong>Pack Poker PRO</strong> (con Derechos de Reventa)</p>
+                <button class="buy-btn" onclick="window.open('https://intellipoker.github.io/leopoker/carta11aa.html','_blank')">📦 Obtener Pack Poker PRO</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// =============================
+// PLO5 Quiz Trainer - Versión FREE (solo BU)
+// =============================
+
+// =============================
+// FUNCIONES DE MARKETING - MODAL PREMIUM
+// =============================
+
+// Función para redirigir a la carta de ventas CON MODAL
+function redirectToPremium(position) {
+    // Mostrar el modal en lugar de redirigir inmediatamente
+    openPositionModal(position);
+}
+
+// Nueva función para mostrar modal de posición premium
+function openPositionModal(position) {
+    const positionNames = {
+        'UTG': 'Under The Gun',
+        'MP': 'Middle Position', 
+        'CO': 'Cutoff',
+        'SB': 'Small Blind'
+    };
+    
+    modalTitle.textContent = `🚀 Entrenador ${positionNames[position]} - PREMIUM`;
+    modalDescription.textContent = `El entrenamiento desde ${position} está disponible en nuestro Pack Poker PRO con análisis avanzado, estrategias GTO y videos explicativos.`;
+    
+    // Configurar el modal para posición premium
+    videoFrame.style.display = "none";
+    videoFrame.src = "";
+    videoLocked.style.display = "block";
+    
+    videoModal.classList.add("active");
+}
+
+const ranks = ["A","K","Q","J","T","9","8","7","6","5","4","3","2"];
+const suits = ["♠","♥","♦","♣"];
+
+// Solo BU es gratis, otras posiciones redirigen
+const UMBRALES = {
+    'BU': 42
+};
+
+let currentHand = [];
+let score = { correct: 0, total: 0 };
+let currentPosition = 'BU';
+
+// MODAL FUNCTIONS - EXACTAMENTE IGUALES A TU VERSIÓN PREMIUM
+const videoModal = document.getElementById("videoModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalDescription = document.getElementById("modalDescription");
+const videoFrame = document.getElementById("videoFrame");
+const videoLocked = document.getElementById("videoLocked");
+
+function openVideoModal(concept, videoId, premium = true) {
+    modalTitle.textContent = concept;
+    modalDescription.textContent = `Explicación sobre ${concept} en PLO5.`;
+
+    videoFrame.style.display = "none";
+    videoFrame.src = "";
+    videoLocked.style.display = "none";
+
+    if (!videoId) {
+        modalDescription.textContent = "Video disponible próximamente.";
+    } else if (premium) {
+        videoLocked.style.display = "block";
+    } else {
+        videoFrame.style.display = "block";
+        videoFrame.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1`;
+    }
+
+    videoModal.classList.add("active");
+}
+
+function closeVideoModal() {
+    videoModal.classList.remove("active");
+    videoFrame.src = "";
+}
+
+videoModal.addEventListener("click", (e) => {
+    if (e.target === videoModal) closeVideoModal();
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeVideoModal();
+});
+
+// Seleccionar posición (solo BU disponible)
+function selectPosition(pos) {
+    if (pos !== 'BU') {
+        redirectToPremium(pos);
+        return;
+    }
+    
+    currentPosition = pos;
+    document.querySelectorAll('.pos-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    document.getElementById('positionInfo').textContent = `Umbral: ≥ ${UMBRALES[pos]}`;
+    
+    if (score.total > 0) {
+        if (confirm('¿Cambiar posición reiniciará tu progreso. ¿Continuar?')) {
+            resetQuiz();
+        }
+    }
+}
+
+// Reiniciar quiz
+function resetQuiz() {
+    score = { correct: 0, total: 0 };
+    generateRandomHand();
+    updateScoreDisplay();
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('decisionButtons').style.display = 'flex';
+}
+
+// Iniciar el quiz
+function initQuiz() {
+    generateRandomHand();
+    updateScoreDisplay();
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('decisionButtons').style.display = 'flex';
+}
+
+// Generar mano aleatoria
+function generateRandomHand() {
+    currentHand = [];
+    const availableCards = [];
+    
+    // Crear mazo completo
+    for (const rank of ranks) {
+        for (const suit of suits) {
+            availableCards.push(rank + suit);
+        }
+    }
+    
+    // Mezclar mazo
+    for (let i = availableCards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [availableCards[i], availableCards[j]] = [availableCards[j], availableCards[i]];
+    }
+    
+    // Tomar 5 cartas
+    currentHand = availableCards.slice(0, 5);
+    displayHand();
+}
+
+// Mostrar mano
+function displayHand() {
+    const handDisplay = document.getElementById('handDisplay');
+    handDisplay.innerHTML = currentHand.map(card => {
+        const rank = card.slice(0, -1);
+        const suit = card.slice(-1);
+        const colorClass = suit === "♠" ? "s" : suit === "♥" ? "h" : suit === "♦" ? "d" : "c";
+        return `<div class="card-chip"><b class="${colorClass}">${rank}${suit}</b></div>`;
+    }).join('');
+}
+
+// Verificar decisión del usuario - VERSIÓN CORREGIDA
+function checkDecision(decision) {
+    document.getElementById('decisionButtons').style.display = 'none';
+    
+    const pi = calcularIndicePoder(currentHand.join(''));
+    const umbral = UMBRALES[currentPosition];
+    const correctAction = pi >= umbral ? 'OR' : 'FOLD';
+    
+    score.total++;
+    const isCorrect = decision === correctAction;
+    
+    if (isCorrect) {
+        score.correct++;
+        showFeedback('✓ CORRECTO', true, pi, umbral, correctAction);
+    } else {
+        showFeedback(`✗ INCORRECTO - Esta mano es ${correctAction} desde ${currentPosition}`, false, pi, umbral, correctAction);
+    }
+    
+    updateScoreDisplay();
+    document.getElementById('nextBtn').style.display = 'block';
+}
+
+// Mostrar feedback - VERSIÓN CORREGIDA
+function showFeedback(message, isCorrect, pi, umbral, correctAction) {
+    const feedback = document.getElementById('feedback');
+    
+    // Generar conceptos aleatorios para esta mano
+    const randomConcepts = getRandomConcepts();
+    let conceptsHTML = '';
+    
+    if (randomConcepts.length > 0) {
+        conceptsHTML = `
+        <div style="margin-top:15px;">
+            <p><strong>Conceptos clave:</strong></p>
+            <ul class="concept-list">
+        `;
+        
+        // TUS CONCEPTOS EXACTOS - MISMOS QUE EN PREMIUM
+        randomConcepts.forEach(concept => {
+            if (concept === "Equity Denial") {
+                conceptsHTML += `<li class="concept-tag"><a class="concept-link" onclick="openVideoModal('SPR Management','dQw4w9WgXcQ',true)">SPR Management</a> <span class="premium-badge">NEW Video</span></li>`;
+            } 
+            else if (concept === "Pot control OOP") {
+                conceptsHTML += `<li class="concept-tag"><a class="concept-link" onclick="openVideoModal('Pot control OOP','dQw4w9WgXcQ',true)">Pot control OOP <span class="premium-badge">NEW Video</span></a></li>`;
+            }
+            else if (concept === "Backdoor") {
+                conceptsHTML += `<li class="concept-tag"><a class="concept-link" onclick="openVideoModal('Fold EV = -1','dQw4w9WgXcQ',true)">Fold EV = -1</a></li>`;
+            }
+            else if (concept === "concepto4") {
+                conceptsHTML += `<li class="concept-tag"><a class="concept-link" onclick="openVideoModal('Reverse implied odds','dQw4w9WgXcQ',true)">Reverse implied odds</a></li>`;
+            }
+            else if (concept === "concepto5") {
+                conceptsHTML += `<li class="concept-tag"><a class="concept-link" onclick="openVideoModal('Junk','dQw4w9WgXcQ',true)">Junk <span class="premium-badge">NEW</span></a></li>`;
+            }
+            else {
+                conceptsHTML += `<li><span class="concept-tag">${concept}</span></li>`;
+            }
+        });
+        
+        conceptsHTML += '</ul></div>';
+    }
+
+    feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+    feedback.innerHTML = `
+        <b>${message}</b><br><br>
+        <div style="text-align: left; font-size: 15px; line-height: 1.4;">
+            Power Index calculado: ${pi.toFixed(1)} | Umbral necesario: ${umbral}<br>
+            <strong>Decisión:</strong> ${correctAction}
+        </div>
+        ${conceptsHTML}
+        <div style="margin-top: 15px; font-size: 14px; color: var(--muted);">
+            💡 <strong>Tip FREE:</strong> Haz clic en los conceptos para ver contenido premium disponible
+        </div>
+    `;
+}
+
+// Función para obtener conceptos aleatorios
+function getRandomConcepts() {
+    const allConcepts = [
+        "Equity Denial", "Pot control OOP", "Backdoor", 
+        "concepto4", "concepto5", "Rango de Apertura"
+    ];
+    
+    // Seleccionar 2-3 conceptos aleatorios
+    const count = Math.floor(Math.random() * 2) + 2;
+    const shuffled = [...allConcepts].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+}
+
+// Actualizar puntuación
+function updateScoreDisplay() {
+    const percentage = score.total > 0 ? ((score.correct / score.total) * 100).toFixed(1) : 0;
+    document.getElementById('scoreDisplay').textContent = 
+        `Aciertos: ${score.correct}/${score.total} (${percentage}%) - ${currentPosition}`;
+}
+
+// Siguiente mano
+function nextHand() {
+    generateRandomHand();
+    document.getElementById('feedback').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('decisionButtons').style.display = 'flex';
+}
+
+// =============================
+// MOTOR ORIGINAL (se mantiene igual)
+// =============================
+
+// --- Función: detecta wrap bonus ---
+function detectWrapBonus(uniqueValsDesc) {
+    let wrap = 0;
+    for (let i = 0; i <= uniqueValsDesc.length - 5; i++) {
+        if (uniqueValsDesc[i] - 1 === uniqueValsDesc[i+1] &&
+            uniqueValsDesc[i+1] - 1 === uniqueValsDesc[i+2] &&
+            uniqueValsDesc[i+2] - 1 === uniqueValsDesc[i+3] &&
+            uniqueValsDesc[i+3] - 1 === uniqueValsDesc[i+4]) {
+            wrap += 4.5;
+        }
+    }
+    for (let i = 0; i <= uniqueValsDesc.length - 4; i++) {
+        if (uniqueValsDesc[i] - 1 === uniqueValsDesc[i+1] &&
+            uniqueValsDesc[i+1] - 1 === uniqueValsDesc[i+2] &&
+            uniqueValsDesc[i+2] - 1 === uniqueValsDesc[i+3]) {
+            wrap += 2.759;
+        }
+    }
+    return wrap;
+}
+
+// --- Función: conectividad fuerte ---
+function tieneConectividadFuerte(valoresDesc) {
+    for (let i = 0; i < valoresDesc.length - 2; i++) {
+        if (valoresDesc[i] - valoresDesc[i+2] <= 3) return true;
+    }
+    return false;
+}
+
+// --- Función: suitedness y Axs ---
+function evaluateSuitedness(manoStrOrArray) {
+    const hand = Array.isArray(manoStrOrArray) ? manoStrOrArray.slice() :
+                 (typeof manoStrOrArray === 'string' ? (manoStrOrArray.match(/[AKQJT2-9][♠♥♦♣]/g) || []) : []);
+    if (hand.length !== 5) return 0;
+
+    const suitCount = { '♠':0, '♥':0, '♦':0, '♣':0 };
+    hand.forEach(c => {
+        const suit = c.slice(-1);
+        suitCount[suit] = (suitCount[suit] || 0) + 1;
+    });
+
+    const countsDesc = Object.values(suitCount).sort((a,b)=>b-a);
+    const signature = countsDesc.join('-');
+
+    let axsBonus = 0;
+    for (let i = 0; i < hand.length; i++) {
+        const r = hand[i].slice(0, -1), s = hand[i].slice(-1);
+        if (r === 'A') {
+            const otherSameSuit = hand.some((c, idx) => idx !== i && c.slice(-1) === s);
+            if (otherSameSuit) {
+                axsBonus = Math.max(axsBonus, 4.5);
+                const otherSuitCounts = Object.entries(suitCount).filter(([k,v])=>k!==s && v>=2);
+                if (otherSuitCounts.length >= 1) axsBonus = 3.6;
+            }
+        }
+    }
+
+    const distroBonuses = {
+        '2-2-1-0': 6.3,
+        '3-2-0-0': 3.6,
+        '2-1-1-1': 2.7,
+        '3-1-1-0': 1.8,
+        '4-1-0-0': -6.3,
+    };
+    const distroBonus = distroBonuses[signature] !== undefined ? distroBonuses[signature] : 0;
+
+    const twoSuitPairs = Object.values(suitCount).filter(v=>v>=2).length;
+    let doubleSuitedBonus = (twoSuitPairs >= 2 && axsBonus < 12) ? 4 : 0;
+
+    return axsBonus + distroBonus + doubleSuitedBonus;
+}
+
+// === Núcleo del Power Index ===
+function calcularIndicePoder(mano) {
+    const ranksMap = {A:8,K:5.988,Q:4.4,J:3.6,T:3,9:1.8,8:1.6,7:1.4,6:1.2,5:1,4:0.8,3:0.6,2:0.4};
+    const match = mano.match(/[AKQJT2-9]/g);
+    if (!match || match.length !== 5) return 0;
+    const valores = match.map(c => ranksMap[c]).sort((a,b)=>b-a);
+    const unicos = [...new Set(valores)];
+
+    let penalizacion = 0;
+    let bono = 0;
+
+    const counts = {};
+    valores.forEach(v => counts[v] = (counts[v] || 0) + 1);
+    const paresMedios = Object.entries(counts).some(([v,c]) => (v==1.6 || v==3) && c==2);
+    if(tieneConectividadFuerte(valores) && paresMedios && unicos[0] <= 3) {
+        bono += 9.9;
+    }
+
+    // === FASE 1: FILTRO NUCLEAR ===
+    if (unicos.length === 2 && (valores.filter(v=>v===unicos[0]).length===4 || valores.filter(v=>v===unicos[1]).length===4)) {
+        penalizacion -= 27;
+        return Math.max(0, penalizacion);
+    }
+    if (valores.some(v => valores.filter(x=>x===v).length===3)) {
+        penalizacion -= 22.5;
+        return Math.max(0, penalizacion);
+    }
+
+    const gaps = valores.map((v,i)=> i < valores.length -1 ? valores[i] - valores[i+1] : 0);
+    const maxGap = Math.max(...gaps);
+    const maxValor = Math.max(...valores);
+    if (maxGap >= 4) {
+        if (maxValor <= 7) {
+            penalizacion -= 18;
+        } else if (maxValor <= 11) {
+            penalizacion -= 9.09;
+        }
+    }
+
+    // === FASE 2: BASE ===
+    function calcularBaseUnica(valores) {
+        const valoresUnicos = [...new Set(valores)];
+        const sumaUnicos = valoresUnicos.reduce((a, b) => a + b, 0);
+        const base = (sumaUnicos / 5) * 14.6074618723;
+        return base;
+    }
+    
+    const base = calcularBaseUnica(valores);
+
+    const altas = valores.filter(v => v >= 3);
+    const bajas = valores.filter(v => v <= 1.4);
+    const gapMax = Math.max(...valores.map((v,i)=> i<valores.length-1 ? valores[i]-valores[i+1] : 0));
+    if (altas.length === 2 && bajas.length === 3 && gapMax >= 3.0) {
+        penalizacion -= 7.2;
+    }
+
+    // === FASE 3: BONOS DE ESTRUCTURA ===
+    function bonoPorPar(valores) {
+        const counts = {};
+        valores.forEach(v => counts[v] = (counts[v] || 0) + 1);
+        const pares = Object.entries(counts).filter(([valor, count]) => count === 2);
+        if (pares.length === 0) return 0;
+        const valorPar = parseFloat(pares[0][0]);
+        const bonosPares = {
+            8: 9, 5.988: 7.2, 4.4: 7.2, 3: 11.34, 1.6: 3.6, 1.4: 3.6, 1.2: 2.7, 0.4: 2.55
+        };
+        return bonosPares[valorPar] || 0;
+    }
+
+    bono += detectWrapBonus(unicos);
+    if (tieneConectividadFuerte(valores)) {
+        bono += 1.68111;
+    }
+    bono += bonoPorPar(valores);
+    const suited = evaluateSuitedness(mano);
+    bono += suited;
+
+    const final = Math.max(0, base + bono + penalizacion);
+    return final;
+}
+
+// Iniciar el quiz cuando se carga la página
+window.onload = initQuiz;
+</script>
+</body>
+</html>
